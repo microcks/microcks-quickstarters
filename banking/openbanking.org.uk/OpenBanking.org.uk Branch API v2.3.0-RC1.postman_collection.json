@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "e8575710-4d5b-4bc5-a196-874d68e11f14",
+		"name": "OpenBanking.org.uk Branch API v2.3.0-RC1",
+		"description": "version=2.3.0-RC1 - Openbanking.org.uk for Branch API Specification as decribed on https://raw.githubusercontent.com/OpenBankingUK/opendata-api-docs-pub/master/assets/branchlocator/bral.2.3.0.swagger.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "branches",
+			"item": [
+				{
+					"name": "Gets a list of all Branch objects",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "If-Modified-Since",
+								"value": "<string>",
+								"type": "text"
+							},
+							{
+								"key": "If-None-Match",
+								"value": "<string>",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https:///open-banking/v2.3/branches",
+							"host": [
+								"https:"
+							],
+							"port": "",
+							"path": [
+								"",
+								"",
+								"open-banking",
+								"v2.3",
+								"branches"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Branches",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https:///open-banking/v2.3/branches",
+									"host": [
+										"https:"
+									],
+									"port": "",
+									"path": [
+										"",
+										"",
+										"open-banking",
+										"v2.3",
+										"branches"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/prs.openbanking.opendata.v2.2+json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"meta\": {\n\t\t\"LastUpdated\": \"2019-12-26T01:44:43.511Z\",\n\t\t\"TotalResults\": 1,\n\t\t\"Agreement\": \"Use of the APIs and any related data will be subject to the terms of the Open Licence and subject to terms and conditions\",\n\t\t\"License\": \"https://www.openbanking.org.uk/open-licence\",\n\t\t\"Terms\": \"https://www.openbanking.org.uk/terms\"\n\t},\n    \"data\": [\n        {\n            \"Brand\": [\n                {\n                    \"BrandName\": \"Lloyds Bank\",\n                    \"Branch\": [\n                        {\n                            \"Identification\": \"77720400\",\n                            \"SequenceNumber\": \"00\",\n                            \"Name\": \"BOURNE\",\n                            \"Type\": \"Physical\",\n                            \"CustomerSegment\": [\n                                \"Personal\",\n                                \"Business\"\n                            ],\n                            \"Accessibility\": [\n                                \"WheelchairAccess\"\n                            ],\n                            \"OtherServiceAndFacility\": [\n                                {\n                                    \"Code\": \"ATMB\",\n                                    \"Name\": \"ATMAtBranch\"\n                                },\n                                {\n                                    \"Code\": \"SCTY\",\n                                    \"Name\": \"SafeCustody\"\n                                }\n                            ],\n                            \"Availability\": {\n                                \"StandardAvailability\": {\n                                    \"Day\": [\n                                        {\n                                            \"Name\": \"Monday\",\n                                            \"OpeningHours\": [\n                                                {\n                                                    \"OpeningTime\": \"09:00:00+0000\",\n                                                    \"ClosingTime\": \"16:00:00+0000\"\n                                                }\n                                            ]\n                                        },\n                                        {\n                                            \"Name\": \"Tuesday\",\n                                            \"OpeningHours\": [\n                                                {\n                                                    \"OpeningTime\": \"09:00:00+0000\",\n                                                    \"ClosingTime\": \"16:00:00+0000\"\n                                                }\n                                            ]\n                                        },\n                                        {\n                                            \"Name\": \"Wednesday\",\n                                            \"OpeningHours\": [\n                                                {\n                                                    \"OpeningTime\": \"09:30:00+0000\",\n                                                    \"ClosingTime\": \"16:00:00+0000\"\n                                                }\n                                            ]\n                                        },\n                                        {\n                                            \"Name\": \"Thursday\",\n                                            \"OpeningHours\": [\n                                                {\n                                                    \"OpeningTime\": \"09:00:00+0000\",\n                                                    \"ClosingTime\": \"16:00:00+0000\"\n                                                }\n                                            ]\n                                        },\n                                        {\n                                            \"Name\": \"Friday\",\n                                            \"OpeningHours\": [\n                                                {\n                                                    \"OpeningTime\": \"09:00:00+0000\",\n                                                    \"ClosingTime\": \"16:00:00+0000\"\n                                                }\n                                            ]\n                                        },\n                                        {\n                                            \"Name\": \"Saturday\",\n                                            \"OpeningHours\": [\n                                                {\n                                                    \"OpeningTime\": \"09:00:00+0000\",\n                                                    \"ClosingTime\": \"13:00:00+0000\"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                }\n                            },\n                            \"ContactInfo\": [\n                                {\n                                    \"ContactType\": \"Phone\",\n                                    \"ContactContent\": \"+44-3453000000\"\n                                },\n                                {\n                                    \"ContactType\": \"Fax\",\n                                    \"ContactContent\": \"+44-1245704705\"\n                                }\n                            ],\n                            \"PostalAddress\": {\n                                \"AddressLine\": [\n                                    \"LLOYDS BRANCH 8 NORTH STREET\"\n                                ],\n                                \"TownName\": \"BOURNE\",\n                                \"CountrySubDivision\": [\n                                    \"LINCOLNSHIRE\"\n                                ],\n                                \"Country\": \"GB\",\n                                \"PostCode\": \"PE10 9ED\",\n                                \"GeoLocation\": {\n                                    \"GeographicCoordinates\": {\n                                        \"Latitude\": \"52.768482\",\n                                        \"Longitude\": \"-0.37696\"\n                                    }\n                                }\n                            }\n                        },\n                        {\n\t\t                     \"Identification\":\"30904904\",\n\t\t                     \"SequenceNumber\":\"04\",\n\t\t                     \"Name\":\"Barnstable Mobile Branch\",\n\t\t                     \"Type\":\"Mobile\",\n\t\t                     \"CustomerSegment\":[\n\t\t                        \"Personal\",\n\t\t                        \"Business\"\n\t\t                     ],\n\t\t                     \"Availability\":{\n\t\t                        \"StandardAvailability\":{\n\t\t                           \"Day\":[\n\t\t                              {\n\t\t                                 \"Name\":\"Wednesday\",\n\t\t                                 \"OpeningHours\":[\n\t\t                                    {\n\t\t                                       \"OpeningTime\":\"13:00:00+0000\",\n\t\t                                       \"ClosingTime\":\"15:00:00+0000\"\n\t\t                                    }\n\t\t                                 ]\n\t\t                              }\n\t\t                           ]\n\t\t                        }\n\t\t                     },\n\t\t                     \"ContactInfo\":[\n\t\t                        {\n\t\t                           \"ContactType\":\"Phone\",\n\t\t                           \"ContactContent\":\"+44-3453000000\"\n\t\t                        }\n\t\t                     ],\n\t\t                     \"PostalAddress\":{\n\t\t                        \"AddressLine\":[\n\t\t                           \"Combe Martin\",\n\t\t                           \"Coach Car Park adjacent to The Pack of Cards\"\n\t\t                        ],\n\t\t                        \"Country\":\"GB\",\n\t\t                        \"PostCode\":\"EX34 0ET\",\n\t\t                        \"GeoLocation\":{\n\t\t                           \"GeographicCoordinates\":{\n\t\t                              \"Latitude\":\"51.202105\",\n\t\t                              \"Longitude\":\"-4.029046\"\n\t\t                           }\n\t\t                        }\n\t\t                     }\n\t\t                  }\n                    ]\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "05dbc4b7-4895-4c03-b763-f776bfe5fcaf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a524d4d7-2303-4f81-9233-1aa35af3adf7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

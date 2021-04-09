@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "5b9f1e3c-e45d-40ea-a97f-b9ef7de1c98c",
+		"name": "Openbanking.org.uk ATM API v2.3.0",
+		"description": "version=2.3.0 - Openbanking.org.uk for ATM API Specification as decribed on https://openbankinguk.github.io/opendata-api-docs-pub/assets/atmlocator/atml.2.3.0.swagger.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "atms",
+			"item": [
+				{
+					"name": "Gets a list of all ATM objects",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "If-Modified-Since",
+								"value": "<string>",
+								"type": "text"
+							},
+							{
+								"key": "If-None-Match",
+								"value": "<string>",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https:///open-banking/v2.3/atms",
+							"host": [
+								"https:"
+							],
+							"port": "",
+							"path": [
+								"",
+								"",
+								"open-banking",
+								"v2.3",
+								"atms"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get ATMs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https:///open-banking/v2.3/atms",
+									"host": [
+										"https:"
+									],
+									"port": "",
+									"path": [
+										"",
+										"",
+										"open-banking",
+										"v2.3",
+										"atms"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n\t\"meta\": {\n\t\t\"LastUpdated\": \"2019-12-26T01:44:43.511Z\",\n\t\t\"TotalResults\": 1,\n\t\t\"Agreement\": \"Use of the APIs and any related data will be subject to the terms of the Open Licence and subject to terms and conditions\",\n\t\t\"License\": \"https://www.openbanking.org.uk/open-licence\",\n\t\t\"Terms\": \"https://www.openbanking.org.uk/terms\"\n\t},\n    \"data\": [\n        {\n            \"Brand\": [\n                {\n                    \"BrandName\": \"UK\",\n                    \"ATM\": [\n                        {\n                            \"Identification\": \"AB461881\",\n                            \"SupportedLanguages\": [\n                                \"en\",\n                                \"fr\",\n                                \"es\",\n                                \"de\"\n                            ],\n                            \"ATMServices\": [\n                                \"CashWithdrawal\",\n                                \"PINChange\",\n                                \"MobilePhoneTopUp\",\n                                \"Balance\",\n                                \"MiniStatement\",\n                                \"CharityDonation\"\n                            ],\n                            \"SupportedCurrencies\": [\n                                \"GBP\"\n                            ],\n                            \"MinimumPossibleAmount\": \"5\",\n                            \"Branch\": {\n                                \"Identification\": \"402529\"\n                            },\n                            \"Location\": {\n                                \"Site\": {\n                                    \"Name\": \"ILKESTON I1\"\n                                },\n                                \"PostalAddress\": {\n                                    \"StreetName\": \"63 Bath Street\",\n                                    \"TownName\": \"ILKESTON\",\n                                    \"Country\": \"GB\",\n                                    \"PostCode\": \"DE7 8DD\",\n                                    \"GeoLocation\": {\n                                        \"GeographicCoordinates\": {\n                                            \"Latitude\": \"52.9740105\",\n                                            \"Longitude\": \"-1.3090999\"\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d16be2e5-24dc-4c72-a20c-fc1658d20c46",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b7ed9741-1f56-4e3e-9195-d8aade23bb75",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
