@@ -1,0 +1,3883 @@
+---
+openapi: 3.0.2
+info:
+  title: FIWARE-NGSI v2
+  version: "1.0"
+  description: "TODO: Add a description"
+servers:
+- url: http://orion.lab.fiware.org/
+paths:
+  /v2/registrations/{registrationId}:
+    get:
+      tags:
+      - Registrations
+      parameters:
+      - examples:
+          abcdefg:
+            value: abcdefg
+        name: registrationId
+        description: registration Id.
+        schema:
+          type: string
+        in: path
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRegistrationResponse'
+              example:
+                id: abcdefg
+                description: Example Context Source
+                dataProvided:
+                  entities:
+                  - id: Bcn_Welt
+                    type: Room
+                  attrs:
+                  - temperature
+                provider:
+                  http:
+                    url: http://contextsource.example.org
+                  supportedForwardingMode: all
+                expires: 2017-10-31T12:00:00
+                status: failed
+                forwardingInformation:
+                  timesSent: 12
+                  lastForwarding: 2017-10-06T16:00:00Z
+                  lastFailure: 2017-10-06T16:00:00Z
+                  lastSuccess: 2017-10-05T18:25:00Z
+              examples:
+                abcdefg:
+                  value:
+                    id: abcdefg
+                    description: Example Context Source
+                    dataProvided:
+                      entities:
+                      - id: Bcn_Welt
+                        type: Room
+                      attrs:
+                      - temperature
+                    provider:
+                      http:
+                        url: http://contextsource.example.org
+                      supportedForwardingMode: all
+                    expires: 2017-10-31T12:00:00
+                    status: active
+                    forwardingInformation:
+                      timesSent: 12
+                      lastForwarding: 2017-10-06T16:00:00Z
+                      lastSuccess: 2017-10-06T16:00:00Z
+                      lastFailure: 2017-10-05T16:00:00Z
+          description: ""
+      operationId: Retrieve Registration
+      summary: Retrieve Registration
+      description: |-
+        The response is the registration represented by a JSON object as described at the beginning of this
+        section.
+        Response:
+        * Successful operation uses 200 OK
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2/registrations/abcdef
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "  {        \"id\": \"abcdefg\",        \"description\": \"Example\
+            \ Context Source\",        \"dataProvided\": {          \"entities\":\
+            \ [            {              \"id\": \"Bcn_Welt\",              \"type\"\
+            : \"Room\"            }          ],          \"attrs\": [            \"\
+            temperature\"          ]        },        \"provider\": {          \"\
+            http\": {            \"url\": \"http://contextsource.example.org\"   \
+            \       },          \"supportedForwardingMode\": \"all\"        },   \
+            \     \"expires\": \"2017-10-31T12:00:00\",        \"status\": \"failed\"\
+            ,        \"forwardingInformation\": {          \"timesSent\": 12,    \
+            \      \"lastForwarding\": \"2017-10-06T16:00:00.00Z\",          \"lastFailure\"\
+            : \"2017-10-06T16:00:00.00Z\",          \"lastSuccess\": \"2017-10-05T18:25:00.00Z\"\
+            ,        }  }      "
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Retrieve Registration1
+        x-testDescription: |-
+          The response is the registration represented by a JSON object as described at the beginning of this
+          section.
+          Response:
+          * Successful operation uses 200 OK
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - Registrations
+      parameters:
+      - name: registrationId
+        description: registration Id.
+        schema:
+          type: string
+        in: path
+        required: true
+      responses:
+        "204":
+          description: ""
+      operationId: Delete Registration
+      summary: Delete Registration
+      description: |-
+        Cancels a context provider registration.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: DELETE
+          uri: /v2/registrations/abcdef
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Delete Registration1
+        x-testDescription: |-
+          Cancels a context provider registration.
+          Response:
+          * Successful operation uses 204 No Content
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    patch:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRegistrationRequest'
+        required: true
+      tags:
+      - Registrations
+      parameters:
+      - name: registrationId
+        description: registration Id.
+        schema:
+          type: string
+        in: path
+        required: true
+      responses:
+        "204":
+          description: ""
+      operationId: Update Registration
+      summary: Update Registration
+      description: |-
+        Only the fields included in the request are updated in the registration.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: PATCH
+          uri: /v2/registrations/abcdef
+          headers:
+            Content-Type: application/json
+          body: "{    \"expires\": \"2017-10-04T00:00:00\"}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Update Registration1
+        x-testDescription: |-
+          Only the fields included in the request are updated in the registration.
+          Response:
+          * Successful operation uses 204 No Content
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/op/update:
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRequest'
+        required: true
+      tags:
+      - Batch Operations
+      parameters:
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - keyValues
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: keyValues
+          description: ""
+      responses:
+        "204":
+          description: ""
+      operationId: Update
+      summary: Update
+      description: |-
+        This operation allows to create, update and/or delete several entities in a single batch operation.
+        The payload is an object with two properties:
+        + `actionType`, to specify the kind of update action to do: either `append`, `appendStrict`, `update`,
+          `delete`, or `replace`.
+        + `entities`, an array of entities, each entity specified using the JSON entity representation format
+          (described in the section "JSON Entity Representation").
+        This operation is split in as many individual operations as entities in the `entities` vector, so
+        the `actionType` is executed for each one of them. Depending on the `actionType`, a mapping with
+        regular non-batch operations can be done:
+        * `append`: maps to `POST /v2/entities` (if the entity does not already exist) or `POST /v2/entities/<id>/attrs`
+          (if the entity already exists).
+        * `appendStrict`: maps to `POST /v2/entities` (if the entity does not already exist) or
+          `POST /v2/entities/<id>/attrs?options=append` (if the entity already exists).
+        * `update`: maps to `PATCH /v2/entities/<id>/attrs`.
+        * `delete`: maps to `DELETE /v2/entities/<id>/attrs/<attrName>` on every attribute included in the entity or
+          to `DELETE /v2/entities/<id>` if no attribute were included in the entity.
+        * `replace`: maps to `PUT /v2/entities/<id>/attrs`.
+        Response:
+        * Successful operation uses 204 No Content.
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: POST
+          uri: /v2/op/update
+          headers:
+            Content-Type: application/json
+          body: "{  \"actionType\": \"append\",  \"entities\": [    {      \"type\"\
+            : \"Room\",      \"id\": \"Bcn-Welt\",      \"temperature\": {       \
+            \ \"value\": 21.7       },      \"humidity\": {        \"value\": 60 \
+            \     }    },    {      \"type\": \"Room\",      \"id\": \"Mad_Aud\",\
+            \      \"temperature\": {        \"value\": 22.9      },      \"humidity\"\
+            : {        \"value\": 85      }    }  ]}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Update1
+        x-testDescription: |-
+          This operation allows to create, update and/or delete several entities in a single batch operation.
+          The payload is an object with two properties:
+          + `actionType`, to specify the kind of update action to do: either `append`, `appendStrict`, `update`,
+            `delete`, or `replace`.
+          + `entities`, an array of entities, each entity specified using the JSON entity representation format
+            (described in the section "JSON Entity Representation").
+          This operation is split in as many individual operations as entities in the `entities` vector, so
+          the `actionType` is executed for each one of them. Depending on the `actionType`, a mapping with
+          regular non-batch operations can be done:
+          * `append`: maps to `POST /v2/entities` (if the entity does not already exist) or `POST /v2/entities/<id>/attrs`
+            (if the entity already exists).
+          * `appendStrict`: maps to `POST /v2/entities` (if the entity does not already exist) or
+            `POST /v2/entities/<id>/attrs?options=append` (if the entity already exists).
+          * `update`: maps to `PATCH /v2/entities/<id>/attrs`.
+          * `delete`: maps to `DELETE /v2/entities/<id>/attrs/<attrName>` on every attribute included in the entity or
+            to `DELETE /v2/entities/<id>` if no attribute were included in the entity.
+          * `replace`: maps to `PUT /v2/entities/<id>/attrs`.
+          Response:
+          * Successful operation uses 204 No Content.
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/op/query:
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+        required: true
+      tags:
+      - Batch Operations
+      parameters:
+      - name: limit
+        description: Limit the number of entities to be retrieved.
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: offset
+        description: Skip a number of records.
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: orderBy
+        description: |-
+          Criteria for ordering results.
+          See "Ordering Results" section for details.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - count
+          - keyValues
+          - values
+          - unique
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: count
+          description: ""
+        - name: keyValues
+          description: ""
+        - name: values
+          description: ""
+        - name: unique
+          description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryResponse'
+              example:
+              - type: Room
+                id: DC_S1-D41
+                temperature:
+                  value: 35.6
+                  type: Number
+              - type: Room
+                id: Boe-Idearium
+                temperature:
+                  value: 22.5
+                  type: Number
+              - type: Car
+                id: P-9873-K
+                temperature:
+                  value: 40
+                  type: Number
+                  accuracy: 2
+                  timestamp:
+                    value: 2015-06-04T07:20:27.378Z
+                    type: DateTime
+          description: ""
+      operationId: Query
+      summary: Query
+      description: "The response payload is an Array containing one object per matching\
+        \ entity, or an empty array `[]` if \nno entities are found. The entities\
+        \ follow the JSON entity representation format\n(described in the section\
+        \ \"JSON Entity Representation\").\nThe payload may contain the following\
+        \ elements (all of them optional):\n+ `entities`: a list of entites to search\
+        \ for. Each element is represented by a JSON object with the\n  following\
+        \ elements:\n    + `id` or `idPattern`: Id or pattern of the affected entities.\
+        \ Both cannot be used at the same\n      time, but one of them must be present.\n\
+        \    + `type` or `typePattern`: Type or type pattern of the entities to search\
+        \ for. Both cannot be used at\n      the same time. If omitted, it means \"\
+        any entity type\".\n+ `attrs`: List of attributes to be provided (if not specified,\
+        \ all attributes).\n+ `expression`: an expression composed of `q`, `mq`, `georel`,\
+        \ `geometry` and `coords` (see \"List\n   entities\" operation above about\
+        \ this field).\n+ `metadata`: a list of metadata names to include in the response.\n\
+        \   See \"Filtering out attributes and metadata\" section for more detail.\n\
+        Response code:\n* Successful operation uses 200 OK\n* Errors use a non-2xx\
+        \ and (optionally) an error payload. See subsection on \"Error Responses\"\
+        \ for\n  more details."
+      x-unitTests:
+      - request:
+          method: POST
+          uri: "/v2/op/query?limit=10&offset=20&orderBy=temperature,!speed"
+          headers:
+            Content-Type: application/json
+          body: "{  \"entities\": [    {      \"idPattern\": \".*\",      \"type\"\
+            : \"Room\"    },    {      \"id\": \"Car\",      \"type\": \"P-9873-K\"\
+            \    }  ],  \"attrs\": [    \"temperature\",    \"humidity\"  ],  \"expression\"\
+            : {     \"q\": \"temperature>20\"  },  \"metadata\": [    \"accuracy\"\
+            ,    \"timestamp\"  ]}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "[  {    \"type\": \"Room\",    \"id\": \"DC_S1-D41\",    \"temperature\"\
+            : {      \"value\": 35.6,      \"type\": \"Number\"    }  },  {    \"\
+            type\": \"Room\",    \"id\": \"Boe-Idearium\",    \"temperature\": { \
+            \     \"value\": 22.5,      \"type\": \"Number\"    }  },  {    \"type\"\
+            : \"Car\",    \"id\": \"P-9873-K\",    \"temperature\": {      \"value\"\
+            : 40,      \"type\": \"Number\",      \"accuracy\": 2,      \"timestamp\"\
+            : {        \"value\": \"2015-06-04T07:20:27.378Z\",        \"type\": \"\
+            DateTime\"      }    }  }]"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Query1
+        x-testDescription: "The response payload is an Array containing one object\
+          \ per matching entity, or an empty array `[]` if \nno entities are found.\
+          \ The entities follow the JSON entity representation format\n(described\
+          \ in the section \"JSON Entity Representation\").\nThe payload may contain\
+          \ the following elements (all of them optional):\n+ `entities`: a list of\
+          \ entites to search for. Each element is represented by a JSON object with\
+          \ the\n  following elements:\n    + `id` or `idPattern`: Id or pattern of\
+          \ the affected entities. Both cannot be used at the same\n      time, but\
+          \ one of them must be present.\n    + `type` or `typePattern`: Type or type\
+          \ pattern of the entities to search for. Both cannot be used at\n      the\
+          \ same time. If omitted, it means \"any entity type\".\n+ `attrs`: List\
+          \ of attributes to be provided (if not specified, all attributes).\n+ `expression`:\
+          \ an expression composed of `q`, `mq`, `georel`, `geometry` and `coords`\
+          \ (see \"List\n   entities\" operation above about this field).\n+ `metadata`:\
+          \ a list of metadata names to include in the response.\n   See \"Filtering\
+          \ out attributes and metadata\" section for more detail.\nResponse code:\n\
+          * Successful operation uses 200 OK\n* Errors use a non-2xx and (optionally)\
+          \ an error payload. See subsection on \"Error Responses\" for\n  more details."
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/op/notify:
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotifyRequest'
+        required: true
+      tags:
+      - Batch Operations
+      parameters:
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - keyValues
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: keyValues
+          description: ""
+      responses:
+        "200":
+          description: ""
+      operationId: Notify
+      summary: Notify
+      description: "This operation is intended to consume a notification payload so\
+        \ that all the entity data included by such notification is persisted, overwriting\
+        \ if necessary.\nThis operation is useful when one NGSIv2 endpoint is subscribed\
+        \ to another NGSIv2 endpoint (federation scenarios). \nThe request payload\
+        \ must be an NGSIv2 notification payload. \nThe behaviour must be exactly\
+        \ the same as `POST /v2/op/update` with `actionType` equal to `append`.\n\
+        Response code:\n* Successful operation uses 200 OK\n* Errors use a non-2xx\
+        \ and (optionally) an error payload. See subsection on \"Error Responses\"\
+        \ for\n  more details."
+      x-unitTests:
+      - request:
+          method: POST
+          uri: /v2/op/notify
+          headers:
+            Content-Type: application/json
+          body: "{  \"subscriptionId\": \"5aeb0ee97d4ef10a12a0262f\",  \"data\": [{\
+            \    \"type\": \"Room\",    \"id\": \"DC_S1-D41\",    \"temperature\"\
+            : {      \"value\": 35.6,      \"type\": \"Number\"    }  },  {    \"\
+            type\": \"Room\",    \"id\": \"Boe-Idearium\",    \"temperature\": { \
+            \     \"value\": 22.5,      \"type\": \"Number\"    }  }]}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Notify1
+        x-testDescription: "This operation is intended to consume a notification payload\
+          \ so that all the entity data included by such notification is persisted,\
+          \ overwriting if necessary.\nThis operation is useful when one NGSIv2 endpoint\
+          \ is subscribed to another NGSIv2 endpoint (federation scenarios). \nThe\
+          \ request payload must be an NGSIv2 notification payload. \nThe behaviour\
+          \ must be exactly the same as `POST /v2/op/update` with `actionType` equal\
+          \ to `append`.\nResponse code:\n* Successful operation uses 200 OK\n* Errors\
+          \ use a non-2xx and (optionally) an error payload. See subsection on \"\
+          Error Responses\" for\n  more details."
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2:
+    get:
+      tags:
+      - API Entry Point
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveApiResourcesResponse'
+              examples:
+                default:
+                  value:
+                    entities_url: /v2/entities
+                    types_url: /v2/types
+                    subscriptions_url: /v2/subscriptions
+                    registrations_url: /v2/registrations
+          description: ""
+      operationId: Retrieve API Resources
+      summary: Retrieve API Resources
+      description: |-
+        This resource does not have any attributes. Instead it offers the initial
+        API affordances in the form of the links in the JSON body.
+        It is recommended to follow the “url” link values,
+        [Link](https://tools.ietf.org/html/rfc5988) or Location headers where
+        applicable to retrieve resources. Instead of constructing your own URLs,
+        to keep your client decoupled from implementation details.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "{  \"entities_url\": \"/v2/entities\",  \"types_url\": \"/v2/types\"\
+            ,  \"subscriptions_url\": \"/v2/subscriptions\",  \"registrations_url\"\
+            : \"/v2/registrations\"}"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Retrieve API Resources1
+        x-testDescription: |-
+          This resource does not have any attributes. Instead it offers the initial
+          API affordances in the form of the links in the JSON body.
+          It is recommended to follow the “url” link values,
+          [Link](https://tools.ietf.org/html/rfc5988) or Location headers where
+          applicable to retrieve resources. Instead of constructing your own URLs,
+          to keep your client decoupled from implementation details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/entities:
+    get:
+      tags:
+      - Entities
+      parameters:
+      - name: id
+        description: |-
+          A comma-separated list of elements.
+          Retrieve entities whose ID matches one of the elements in the list.
+          Incompatible with `idPattern`.
+        schema:
+          type: string
+        in: query
+        required: false
+      - examples:
+          rooms:
+            value: Room
+        name: type
+        description: |-
+          comma-separated list of elements.
+          Retrieve entities whose type matches one of the elements in the list.
+          Incompatible with `typePattern`.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: idPattern
+        description: |-
+          A correctly formated regular expression.
+          Retrieve entities whose ID matches the regular expression. Incompatible with `id`.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: typePattern
+        description: |-
+          A correctly formated regular expression.
+          Retrieve entities whose type matches the regular expression. Incompatible with `type`.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: q
+        description: |-
+          A query expression, composed of a list of statements
+          separated by `;`, i.e., q=statement1;statement2;statement3.
+          See [Simple Query Language specification](#simple_query_language).
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: mq
+        description: |-
+          A query expression for attribute metadata,
+          composed of a list of statements separated by `;`, i.e., mq=statement1;statement2;statement3.
+          See [Simple Query Language specification](#simple_query_language).
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: georel
+        description: |-
+          Spatial relationship between matching entities and a
+          reference shape. See [Geographical Queries](#geographical_queries).
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: geometry
+        description: |-
+          Geografical area to which the query is restricted.
+          See [Geographical Queries](#geographical_queries).
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: coords
+        description: |-
+          List of latitude-longitude
+          pairs of coordinates separated by ';'. See [Geographical Queries](#geographical_queries).
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: limit
+        description: Limits the number of entities to be retrieved
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: offset
+        description: Establishes the offset from where entities are retrieved
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: attrs
+        description: |-
+          Comma-separated list of attribute names whose data
+          are to be included in the response.
+          The attributes are retrieved in the order specified by this parameter. If this parameter is
+          not included, the attributes are retrieved in arbitrary order.
+          See "Filtering out attributes and metadata" section for more detail.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: metadata
+        description: |-
+          A list of metadata names to include in the response.
+          See "Filtering out attributes and metadata" section for more detail.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: orderBy
+        description: |-
+          Criteria for ordering results.
+          See "Ordering Results" section for details.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - count
+          - keyValues
+          - values
+          - unique
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: count
+          description: ""
+        - name: keyValues
+          description: ""
+        - name: values
+          description: ""
+        - name: unique
+          description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListEntitiesResponse'
+              examples:
+                default:
+                  value:
+                  - id: Room1
+                    type: Room
+                    temperature:
+                      value: 23
+                      type: Float
+                    pressure:
+                      value: 720
+                      type: Integer
+                  - id: Room2
+                    type: Room
+                    temperature:
+                      value: 21
+                      type: Float
+                    pressure:
+                      value: 711
+                      type: Integer
+                  - type: Room
+                    id: Room3
+                    temperature:
+                      value: 35.6
+                      type: Number
+                      metadata: {}
+                  - type: Room
+                    id: Room4
+                    temperature:
+                      value: 22.5
+                      type: Number
+                      metadata: {}
+                  - type: Room
+                    id: Bcn_Welt
+                    temperature:
+                      value: 21.7
+                      type: Number
+                    humidity:
+                      value: 60
+                      type: Number
+                    location:
+                      value: "41.3763726, 2.1864475"
+                      type: geo:point
+                      metadata:
+                        crs:
+                          value: WGS84
+                          type: Text
+                  - type: Car
+                    id: Car1
+                    speed:
+                      value: 100
+                      type: number
+                      metadata:
+                        accuracy:
+                          value: 2
+                          type: Number
+                        timestamp:
+                          value: 2015-06-04T07:20:27.378Z
+                          type: DateTime
+                rooms:
+                  value:
+                  - id: Room1
+                    type: Room
+                    temperature:
+                      value: 23
+                      type: Float
+                    pressure:
+                      value: 720
+                      type: Integer
+                  - id: Room2
+                    type: Room
+                    temperature:
+                      value: 21
+                      type: Float
+                    pressure:
+                      value: 711
+                      type: Integer
+                  - type: Room
+                    id: Room3
+                    temperature:
+                      value: 35.6
+                      type: Number
+                      metadata: {}
+                  - type: Room
+                    id: Room4
+                    temperature:
+                      value: 22.5
+                      type: Number
+                      metadata: {}
+                  - type: Room
+                    id: Bcn_Welt
+                    temperature:
+                      value: 21.7
+                      type: Number
+                    humidity:
+                      value: 60
+                      type: Number
+                    location:
+                      value: "41.3763726, 2.1864475"
+                      type: geo:point
+                      metadata:
+                        crs:
+                          value: WGS84
+                          type: Text
+          description: ""
+      operationId: List Entities
+      summary: List Entities
+      description: "Retrieves a list of entities that match different criteria by\
+        \ id, type, pattern matching (either id or type)\nand/or those which match\
+        \ a query or geographical query (see [Simple Query Language](#simple_query_language)\
+        \ and \n[Geographical Queries](#geographical_queries)). A given entity has\
+        \ to match all the criteria to be retrieved\n(i.e., the criteria is combined\
+        \ in a logical AND way). Note that pattern matching query parameters are incompatible\n\
+        (i.e. mutually exclusive) with their corresponding exact matching parameters,\
+        \ i.e. `idPattern` with `id` and\n`typePattern` with `type`.\nThe response\
+        \ payload is an array containing one object per matching entity. Each entity\
+        \ follows\nthe JSON entity representation format (described in \"JSON Entity\
+        \ Representation\" section).\nResponse code:\n* Successful operation uses\
+        \ 200 OK\n* Errors use a non-2xx and (optionally) an error payload. See subsection\
+        \ on \"Error Responses\" for\n  more details."
+      x-unitTests:
+      - request:
+          method: GET
+          uri: "/v2/entities?id=Boe_Idearium&type=Room&idPattern=Bode_.*&typePattern=Room_.*&q=temperature>40&mq=temperature.accuracy<0.9&georel=near&geometry=point&coords=41.390205,2.154007;48.8566,2.3522&limit=20&offset=20&attrs=seatNumber&metadata=accuracy&orderBy=temperature,!speed"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "[ {   \"type\": \"Room\",   \"id\": \"DC_S1-D41\",   \"temperature\"\
+            : {     \"value\": 35.6,     \"type\": \"Number\",     \"metadata\": {}\
+            \   } }, {   \"type\": \"Room\",   \"id\": \"Boe-Idearium\",   \"temperature\"\
+            : {     \"value\": 22.5,     \"type\": \"Number\",     \"metadata\": {}\
+            \   } }, {   \"type\": \"Car\",   \"id\": \"P-9873-K\",   \"speed\": {\
+            \     \"value\": 100,     \"type\": \"number\",     \"metadata\": {  \
+            \     \"accuracy\": {         \"value\": 2,         \"type\": \"Number\"\
+            \       },       \"timestamp\": {         \"value\": \"2015-06-04T07:20:27.378Z\"\
+            ,         \"type\": \"DateTime\"       }     }   } }]"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: List Entities1
+        x-testDescription: "Retrieves a list of entities that match different criteria\
+          \ by id, type, pattern matching (either id or type)\nand/or those which\
+          \ match a query or geographical query (see [Simple Query Language](#simple_query_language)\
+          \ and \n[Geographical Queries](#geographical_queries)). A given entity has\
+          \ to match all the criteria to be retrieved\n(i.e., the criteria is combined\
+          \ in a logical AND way). Note that pattern matching query parameters are\
+          \ incompatible\n(i.e. mutually exclusive) with their corresponding exact\
+          \ matching parameters, i.e. `idPattern` with `id` and\n`typePattern` with\
+          \ `type`.\nThe response payload is an array containing one object per matching\
+          \ entity. Each entity follows\nthe JSON entity representation format (described\
+          \ in \"JSON Entity Representation\" section).\nResponse code:\n* Successful\
+          \ operation uses 200 OK\n* Errors use a non-2xx and (optionally) an error\
+          \ payload. See subsection on \"Error Responses\" for\n  more details."
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEntityRequest'
+            examples:
+              room-with-location:
+                value:
+                  type: Room
+                  id: Bcn-Welt
+                  temperature:
+                    value: 21.7
+                  humidity:
+                    value: 60
+                  location:
+                    value: "41.3763726, 2.1864475"
+                    type: geo:point
+                    metadata:
+                      crs:
+                        value: WGS84
+        required: true
+      tags:
+      - Entities
+      parameters:
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - keyValues
+          - upsert
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: keyValues
+          description: ""
+        - name: upsert
+          description: ""
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                room-with-location:
+                  value:
+                    type: Room
+                    id: Bcn-Welt
+                    temperature:
+                      value: 21.7
+                    humidity:
+                      value: 60
+                    location:
+                      value: "41.3763726, 2.1864475"
+                      type: geo:point
+                      metadata:
+                        crs:
+                          value: WGS84
+          description: 201 returned if upsert option is not used
+        "204":
+          description: ""
+      operationId: Create Entity
+      summary: Create Entity
+      description: |-
+        The payload is an object representing the entity to be created. The object follows
+        the JSON entity representation format (described in a "JSON Entity Representation" section).
+        Response:
+        * Successful operation uses 201 Created (if upsert option is not used) or 204 No Content (if
+          upsert option is used). Response includes a `Location` header with the URL of the
+          created entity.
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: POST
+          uri: /v2/entities
+          headers:
+            Content-Type: application/json
+          body: "{  \"type\": \"Room\",  \"id\": \"Bcn-Welt\",  \"temperature\": {\
+            \    \"value\": 21.7  },  \"humidity\": {    \"value\": 60  },  \"location\"\
+            : {    \"value\": \"41.3763726, 2.1864475\",    \"type\": \"geo:point\"\
+            ,    \"metadata\": {      \"crs\": {        \"value\": \"WGS84\"     \
+            \ }    }  }}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Location: /v2/entities/Bcn-Welt?type=Room
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Create Entity1
+        x-testDescription: |-
+          The payload is an object representing the entity to be created. The object follows
+          the JSON entity representation format (described in a "JSON Entity Representation" section).
+          Response:
+          * Successful operation uses 201 Created (if upsert option is not used) or 204 No Content (if
+            upsert option is used). Response includes a `Location` header with the URL of the
+            created entity.
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/entities/{entityId}:
+    get:
+      tags:
+      - Entities
+      parameters:
+      - examples:
+          Room1:
+            value: Room1
+          Room1-keyValues:
+            value: Room1
+          Room1-values:
+            value: Room1
+          Car1:
+            value: Car1
+        name: entityId
+        description: Id of the entity to be retrieved
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: attrs
+        description: |-
+          Comma-separated list of attribute names whose
+          data must be included in the response. The attributes are retrieved in the order specified by
+          this parameter. See "Filtering out attributes and metadata" section for more detail.
+          If this parameter is not included, the attributes are retrieved in arbitrary order, and all
+          the attributes of the entity are included in the response.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: metadata
+        description: |-
+          A list of metadata names to include in the response.
+          See "Filtering out attributes and metadata" section for more detail.
+        schema:
+          type: string
+        in: query
+        required: false
+      - examples:
+          Room1-keyValues:
+            value: keyValues
+          Room1-values:
+            value: values
+        name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - keyValues
+          - values
+          - unique
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: keyValues
+          description: ""
+        - name: values
+          description: ""
+        - name: unique
+          description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveEntityResponse'
+              examples:
+                Room1:
+                  value:
+                    id: Room1
+                    pressure:
+                      metadata: {}
+                      type: Integer
+                      value: 720
+                    temperature:
+                      metadata: {}
+                      type: Float
+                      value: 23
+                    type: Room
+                Room1-values:
+                  value:
+                  - 23
+                  - 720
+                Room1-keyValues:
+                  value:
+                    id: Room1
+                    pressure: 720
+                    temperature: 23
+                    type: Room
+                Car1:
+                  value:
+                    type: Car
+                    id: Car1
+                    speed:
+                      value: 100
+                      type: number
+                      metadata:
+                        accuracy:
+                          value: 2
+                          type: Number
+                        timestamp:
+                          value: 2015-06-04T07:20:27.378Z
+                          type: DateTime
+          description: ""
+      operationId: Retrieve Entity
+      summary: Retrieve Entity
+      description: |-
+        The response is an object representing the entity identified by the ID. The object follows
+        the JSON entity representation format (described in "JSON Entity Representation" section).
+        This operation must return one entity element only, but there may be more than one entity with the
+        same ID (e.g. entities with same ID but different types).
+        In such case, an error message is returned, with the HTTP status code set to 409 Conflict.
+        Response:
+        * Successful operation uses 200 OK
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for more details.
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - Entities
+      parameters:
+      - name: entityId
+        description: Id of the entity to be deleted
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      responses:
+        "204":
+          description: ""
+      operationId: Remove Entity
+      summary: Remove Entity
+      description: |-
+        Delete the entity.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/entities/{entityId}/attrs:
+    get:
+      tags:
+      - Entities
+      parameters:
+      - examples:
+          Bcn_Welt:
+            value: Bcn_Welt
+        name: entityId
+        description: Id of the entity to be retrieved
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: attrs
+        description: |-
+          Comma-separated list of attribute names whose
+          data are to be included in the response. The attributes are retrieved in the order specified
+          by this parameter.
+          If this parameter is not included, the attributes are retrieved in arbitrary order, and all
+          the attributes of the entity are included in the response.
+          See "Filtering out attributes and metadata" section for more detail.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: metadata
+        description: |-
+          A list of metadata names to include in the response.
+          See "Filtering out attributes and metadata" section for more detail.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - keyValues
+          - values
+          - unique
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: keyValues
+          description: ""
+        - name: values
+          description: ""
+        - name: unique
+          description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveEntityAttributesResponse'
+              examples:
+                Bcn_Welt:
+                  value:
+                    temperature:
+                      value: 21.7
+                      type: Number
+                    humidity:
+                      value: 60
+                      type: Number
+                    location:
+                      value: "41.3763726, 2.1864475"
+                      type: geo:point
+                      metadata:
+                        crs:
+                          value: WGS84
+                          type: Text
+          description: ""
+      operationId: Retrieve Entity Attributes
+      summary: Retrieve Entity Attributes
+      description: |-
+        This request is similar to retreiving the whole entity, however this one omits the `id` and `type`
+        fields.
+        Just like the general request of getting an entire entity, this operation must return only one
+        entity element. If more than one entity with the same ID is found (e.g. entities with
+        same ID but different type), an error message is returned, with the HTTP status code set to
+        409 Conflict.
+        Response:
+        * Successful operation uses 200 OK
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceAllEntityAttributesRequest'
+            examples:
+              Bcn_Welt-temperature:
+                value:
+                  temperature:
+                    value: 21.6
+        required: true
+      tags:
+      - Entities
+      parameters:
+      - examples:
+          Bcn_Welt-temperature:
+            value: Bcn_Welt
+        name: entityId
+        description: Id of the entity in question.
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: options
+        description: Operations options
+        schema:
+          enum:
+          - keyValues
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: keyValues
+          description: ""
+      responses:
+        "204":
+          content:
+            application/json:
+              examples:
+                Bcn_Welt-temperature:
+                  value: '""'
+          description: ""
+      operationId: Replace all entity attributes
+      summary: Replace all entity attributes
+      description: |-
+        The request payload is an object representing the new entity attributes. The object follows
+        the JSON entity representation format (described in a "JSON Entity Representation" above), except
+        that `id` and `type` are not allowed.
+        The attributes previously existing in the entity are removed and replaced by the ones in the
+        request.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrAppendEntityAttributesRequest'
+            examples:
+              Bcn_Welt-ambientNoise:
+                value:
+                  ambientNoise:
+                    value: 31.5
+        required: true
+      tags:
+      - Entities
+      parameters:
+      - examples:
+          Bcn_Welt-ambientNoise:
+            value: Bcn_Welt
+        name: entityId
+        description: Entity id to be updated
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: options
+        description: Operations options
+        schema:
+          enum:
+          - append
+          - keyValues
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: append
+          description: ""
+        - name: keyValues
+          description: ""
+      responses:
+        "204":
+          content:
+            application/json:
+              examples:
+                Bcn_Welt-ambientNoise:
+                  value: '""'
+          description: ""
+      operationId: Update or Append Entity Attributes
+      summary: Update or Append Entity Attributes
+      description: |-
+        The request payload is an object representing the attributes to append or update. The object follows
+        the JSON entity representation format (described in "JSON Entity Representation" section), except
+        that `id` and `type` are not allowed.
+        The entity attributes are updated with the ones in the payload, depending on
+        whether the `append` operation option is used or not.
+        * If `append` is not used: the entity attributes are updated (if they previously exist) or appended
+          (if they don't previously exist) with the ones in the payload.
+        * If `append` is used (i.e. strict append semantics): all the attributes in the payload not
+          previously existing in the entity are appended. In addition to that, in case some of the
+          attributes in the payload already exist in the entity, an error is returned.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    patch:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExistingEntityAttributesRequest'
+        required: true
+      tags:
+      - Entities
+      parameters:
+      - name: entityId
+        description: Id of the entity to be updated
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: options
+        description: Operations options
+        schema:
+          enum:
+          - keyValues
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: keyValues
+          description: ""
+      responses:
+        "204":
+          description: ""
+      operationId: Update Existing Entity Attributes
+      summary: Update Existing Entity Attributes
+      description: |-
+        The request payload is an object representing the attributes to update. The object follows
+        the JSON entity representation format (described in "JSON Entity Representation" section), except
+        that `id` and `type` are not allowed.
+        The entity attributes are updated with the ones in the payload. In addition to that, if one or more
+        attributes in the payload doesn't exist in the entity, an error is returned.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/entities/{entityId}/attrs/{attrName}:
+    get:
+      tags:
+      - Attributes
+      parameters:
+      - examples:
+          Bcn_Welt-temperature:
+            value: Bcn_Welt
+          Bcn_Welt-humidity:
+            value: Bcn_Welt
+        name: entityId
+        description: Id of the entity
+        schema:
+          type: string
+        in: path
+        required: true
+      - examples:
+          Bcn_Welt-temperature:
+            value: temperature
+          Bcn_Welt-humidity:
+            value: humidity
+        name: attrName
+        description: Name of the attribute to be retrieved.
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: metadata
+        description: |-
+          A list of metadata names to include in the response.
+          See "Filtering out attributes and metadata" section for more detail.
+        schema:
+          type: string
+        in: query
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAttributeDataResponse'
+              examples:
+                Bcn_Welt-temperature:
+                  value:
+                    value: 21.7
+                    type: Number
+                    metadata: {}
+                Bcn_Welt-humidity:
+                  value:
+                    value: 60
+                    type: Number
+                    metadata: {}
+          description: ""
+      operationId: Get attribute data
+      summary: Get attribute data
+      description: |-
+        Returns a JSON object with the attribute data of the attribute. The object follows the JSON
+        representation for attributes (described in "JSON Attribute Representation" section).
+        Response:
+        * Successful operation uses 200 OK.
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2/entities/Bcn_Welt/attrs/temperature?metadata=accuracy
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "{  \"value\": 21.7,  \"type\": \"Number\",  \"metadata\": {}}"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Get attribute data1
+        x-testDescription: |-
+          Returns a JSON object with the attribute data of the attribute. The object follows the JSON
+          representation for attributes (described in "JSON Attribute Representation" section).
+          Response:
+          * Successful operation uses 200 OK.
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAttributeDataRequest'
+        required: true
+      tags:
+      - Attributes
+      parameters:
+      - name: entityId
+        description: Id of the entity to update
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: attrName
+        description: Attribute name
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      responses:
+        "200":
+          description: ""
+      operationId: Update Attribute Data
+      summary: Update Attribute Data
+      description: |-
+        The request payload is an object representing the new attribute data. Previous attribute data
+        is replaced by the one in the request. The object follows the JSON representation for attributes
+        (described in "JSON Attribute Representation" section).
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: PUT
+          uri: /v2/entities/Bcn_Welt/attrs/temperature
+          headers:
+            Content-Type: application/json
+          body: "{  \"value\": 25.0,  \"metadata\": {    \"unitCode\": {      \"value\"\
+            : \"CEL\"    }  }}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Update Attribute Data1
+        x-testDescription: |-
+          The request payload is an object representing the new attribute data. Previous attribute data
+          is replaced by the one in the request. The object follows the JSON representation for attributes
+          (described in "JSON Attribute Representation" section).
+          Response:
+          * Successful operation uses 204 No Content
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - Attributes
+      parameters:
+      - name: entityId
+        description: Id of the entity.
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: attrName
+        description: Attribute name.
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      responses:
+        "204":
+          description: ""
+      operationId: Remove a Single Attribute
+      summary: Remove a Single Attribute
+      description: |-
+        Removes an entity attribute.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: DELETE
+          uri: /v2/entities/Bcn_Welt/attrs/temperature
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Remove a Single Attribute1
+        x-testDescription: |-
+          Removes an entity attribute.
+          Response:
+          * Successful operation uses 204 No Content
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/entities/{entityId}/attrs/{attrName}/value:
+    get:
+      tags:
+      - Attribute Value
+      parameters:
+      - examples:
+          Bcn_Welt-temperature:
+            value: Bcn_Welt
+        name: entityId
+        description: Id of the entity in question
+        schema:
+          type: string
+        in: path
+        required: true
+      - examples:
+          Bcn_Welt-temperature:
+            value: temperature
+        name: attrName
+        description: Name of the attribute to be retrieved.
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAttributeValueResponse'
+              examples:
+                Bcn_Welt-temperature:
+                  value: "21.7"
+          description: ""
+      operationId: Get Attribute Value
+      summary: Get Attribute Value
+      description: |-
+        This operation returns the `value` property with the value of the attribute.
+        * If attribute value is JSON Array or Object:
+          * If `Accept` header can be expanded to `application/json` or `text/plain` return the value as a JSON with a
+            response type of application/json or text/plain (whichever is the first in `Accept` header or
+            `application/json` in case of `Accept: */*`).
+          * Else return a HTTP error "406 Not Acceptable: accepted MIME types: application/json, text/plain"
+        * If attribute value is a string, number, null or boolean:
+          * If `Accept` header can be expanded to text/plain return the value as text. In case of a string, citation
+            marks are used at the begining and end.
+          * Else return a HTTP error "406 Not Acceptable: accepted MIME types: text/plain"
+        Response:
+        * Successful operation uses 200 OK.
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2/entities/Bcn_Welt/attrs/address/value
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "{  \"address\": \"Ronda de la Comunicacion s/n\",  \"zipCode\": 28050,\
+            \  \"city\": \"Madrid\",  \"country\": \"Spain\"}"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Get Attribute Value1
+        x-testDescription: |-
+          This operation returns the `value` property with the value of the attribute.
+          * If attribute value is JSON Array or Object:
+            * If `Accept` header can be expanded to `application/json` or `text/plain` return the value as a JSON with a
+              response type of application/json or text/plain (whichever is the first in `Accept` header or
+              `application/json` in case of `Accept: */*`).
+            * Else return a HTTP error "406 Not Acceptable: accepted MIME types: application/json, text/plain"
+          * If attribute value is a string, number, null or boolean:
+            * If `Accept` header can be expanded to text/plain return the value as text. In case of a string, citation
+              marks are used at the begining and end.
+            * Else return a HTTP error "406 Not Acceptable: accepted MIME types: text/plain"
+          Response:
+          * Successful operation uses 200 OK.
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAttributeValueRequest'
+        required: true
+      tags:
+      - Attribute Value
+      parameters:
+      - name: entityId
+        description: Id of the entity to be updated.
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: attrName
+        description: Attribute name.
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: type
+        description: |-
+          Entity type, to avoid ambiguity in case there are several
+          entities with the same entity id.
+        schema:
+          type: string
+        in: query
+        required: false
+      responses:
+        "200":
+          description: ""
+      operationId: Update Attribute Value
+      summary: Update Attribute Value
+      description: |-
+        The request payload is the new attribute value.
+        * If the request payload MIME type is `application/json`, then the value of the attribute is set to
+          the JSON object or array coded in the payload (if the payload is not a valid JSON document,
+          then an error is returned).
+        * If the request payload MIME type is `text/plain`, then the following algorithm is applied to the
+          payload:
+          * If the payload starts and ends with citation-marks (`"`), the value is taken as a string
+            (the citation marks themselves are not considered part of the string)
+          * If `true` or `false`, the value is taken as a boolean.
+          * If `null`, the value is taken as null.
+          * If these first three tests 'fail', the text is interpreted as a number.
+          * If not a valid number, then an error is returned and the attribute's value is unchanged.
+        The payload MIME type in the request is specified in the `Content-Type` HTTP header.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: PUT
+          uri: /v2/entities/Bcn_Welt/attrs/address/value
+          headers:
+            Content-Type: application/json
+          body: "{  \"address\": \"Ronda de la Comunicacion s/n\",  \"zipCode\": 28050,\
+            \  \"city\": \"Madrid\",  \"country\": \"Spain\"}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Update Attribute Value1
+        x-testDescription: |-
+          The request payload is the new attribute value.
+          * If the request payload MIME type is `application/json`, then the value of the attribute is set to
+            the JSON object or array coded in the payload (if the payload is not a valid JSON document,
+            then an error is returned).
+          * If the request payload MIME type is `text/plain`, then the following algorithm is applied to the
+            payload:
+            * If the payload starts and ends with citation-marks (`"`), the value is taken as a string
+              (the citation marks themselves are not considered part of the string)
+            * If `true` or `false`, the value is taken as a boolean.
+            * If `null`, the value is taken as null.
+            * If these first three tests 'fail', the text is interpreted as a number.
+            * If not a valid number, then an error is returned and the attribute's value is unchanged.
+          The payload MIME type in the request is specified in the `Content-Type` HTTP header.
+          Response:
+          * Successful operation uses 204 No Content
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/subscriptions:
+    get:
+      tags:
+      - Subscriptions
+      parameters:
+      - name: limit
+        description: Limit the number of subscriptions to be retrieved
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: offset
+        description: Skip a number of subscriptions
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - count
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: count
+          description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListSubscriptionsResponse'
+              examples:
+                subscriptions:
+                  value:
+                  - id: abcdefg
+                    description: One subscription to rule them all
+                    subject:
+                      entities:
+                      - id: Bcn_Welt
+                        type: Room
+                      condition:
+                        attrs:
+                        - 'temperature '
+                        expression:
+                          q: temperature>40
+                    notification:
+                      httpCustom:
+                        url: http://localhost:1234
+                        headers:
+                          X-MyHeader: foo
+                        qs:
+                          authToken: bar
+                      attrsFormat: keyValues
+                      attrs:
+                      - temperature
+                      - humidity
+                      timesSent: 12
+                      lastNotification: 2015-10-05T16:00:00Z
+                      lastFailure: 2015-10-06T16:00:00Z
+                    expires: 2016-04-05T14:00:00Z
+                    status: failed
+                    throttling: 5
+                  - id: hijklmn
+                    description: Another subscription to rule them all
+                    subject:
+                      entities:
+                      - id: Car1
+                        type: Car
+                      condition:
+                        attrs:
+                        - 'speed '
+                        expression:
+                          q: speed>80
+                    notification:
+                      httpCustom:
+                        url: http://localhost:5678
+                        headers:
+                          X-MyHeader: foo
+                        qs:
+                          authToken: bar
+                      attrsFormat: keyValues
+                      attrs:
+                      - speed
+                      timesSent: 3
+                      lastNotification: 2019-10-05T16:00:00Z
+                      lastFailure: 2019-10-06T16:00:00Z
+                    expires: 2020-04-05T14:00:00Z
+                    status: failed
+                    throttling: 5
+          description: ""
+      operationId: List Subscriptions
+      summary: List Subscriptions
+      description: |-
+        Returns a list of all the subscriptions present in the system.
+        Response:
+        * Successful operation uses 200 OK
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2/subscriptions?limit=10&offset=20
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+          body: "[  {    \"id\": \"abcdefg\",    \"description\": \"One subscription\
+            \ to rule them all\",    \"subject\": {                          \"entities\"\
+            : [        {          \"id\": \"Bcn_Welt\",          \"type\": \"Room\"\
+            \        }      ],      \"condition\": {         \"attrs\": [ \"temperature\
+            \ \" ],         \"expression\": {            \"q\": \"temperature>40\"\
+            \         }      }    },    \"notification\": {      \"httpCustom\": {\
+            \        \"url\": \"http://localhost:1234\",        \"headers\": {   \
+            \       \"X-MyHeader\": \"foo\"        },        \"qs\": {          \"\
+            authToken\": \"bar\"        }      },      \"attrsFormat\": \"keyValues\"\
+            ,      \"attrs\": [\"temperature\", \"humidity\"],      \"timesSent\"\
+            : 12,      \"lastNotification\": \"2015-10-05T16:00:00.00Z\",      \"\
+            lastFailure\": \"2015-10-06T16:00:00.00Z\"    },    \"expires\": \"2016-04-05T14:00:00.00Z\"\
+            ,    \"status\": \"failed\",    \"throttling\": 5  }]"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: List Subscriptions1
+        x-testDescription: |-
+          Returns a list of all the subscriptions present in the system.
+          Response:
+          * Successful operation uses 200 OK
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubscriptionRequest'
+            examples:
+              hijklmn-subscription:
+                value:
+                  description: Another subscription to rule them all
+                  subject:
+                    entities:
+                    - id: Car1
+                      type: Car
+                    condition:
+                      attrs:
+                      - 'speed '
+                      expression:
+                        q: speed>80
+                  notification:
+                    httpCustom:
+                      url: http://localhost:5678
+                      headers:
+                        X-MyHeader: foo
+                      qs:
+                        authToken: bar
+                    attrsFormat: keyValues
+                    attrs:
+                    - speed
+                    timesSent: 3
+                    lastNotification: 2019-10-05T16:00:00Z
+                    lastFailure: 2019-10-06T16:00:00Z
+                  expires: 2020-04-05T14:00:00Z
+                  status: failed
+                  throttling: 5
+        required: true
+      tags:
+      - Subscriptions
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                hijklmn-subscription:
+                  value:
+                    id: hijklmn
+                    description: Another subscription to rule them all
+                    subject:
+                      entities:
+                      - id: Car1
+                        type: Car
+                      condition:
+                        attrs:
+                        - 'speed '
+                        expression:
+                          q: speed>80
+                    notification:
+                      httpCustom:
+                        url: http://localhost:5678
+                        headers:
+                          X-MyHeader: foo
+                        qs:
+                          authToken: bar
+                      attrsFormat: keyValues
+                      attrs:
+                      - speed
+                      timesSent: 3
+                      lastNotification: 2019-10-05T16:00:00Z
+                      lastFailure: 2019-10-06T16:00:00Z
+                    expires: 2020-04-05T14:00:00Z
+                    status: failed
+                    throttling: 5
+          description: ""
+      operationId: Create Subscription
+      summary: Create Subscription
+      description: |-
+        Creates a new subscription.
+        The subscription is represented by a JSON object as described at the beginning of this section.
+        Response:
+        * Successful operation uses 201 Created
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: POST
+          uri: /v2/subscriptions
+          headers:
+            Content-Type: application/json
+          body: "{  \"description\": \"One subscription to rule them all\",  \"subject\"\
+            : {    \"entities\": [      {        \"idPattern\": \".*\",        \"\
+            type\": \"Room\"      }    ],    \"condition\": {      \"attrs\": [ \"\
+            temperature\" ],      \"expression\": {        \"q\": \"temperature>40\"\
+            \      }    }  },  \"notification\": {    \"http\": {      \"url\": \"\
+            http://localhost:1234\"    },    \"attrs\": [\"temperature\", \"humidity\"\
+            ]  },              \"expires\": \"2016-04-05T14:00:00.00Z\",  \"throttling\"\
+            : 5}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Location: /v2/subscriptions/abcde98765
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Create Subscription1
+        x-testDescription: |-
+          Creates a new subscription.
+          The subscription is represented by a JSON object as described at the beginning of this section.
+          Response:
+          * Successful operation uses 201 Created
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/types/:
+    get:
+      tags:
+      - Types
+      parameters:
+      - name: limit
+        description: Limit the number of types to be retrieved.
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: offset
+        description: Skip a number of records.
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: options
+        description: Options dictionary.
+        schema:
+          enum:
+          - count
+          - values
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: count
+          description: ""
+        - name: values
+          description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListEntityTypesResponse'
+              examples:
+                default:
+                  value:
+                  - type: Car
+                    attrs:
+                      speed:
+                        types:
+                        - Number
+                      fuel:
+                        types:
+                        - gasoline
+                        - diesel
+                      temperature:
+                        types:
+                        - urn:phenomenum:temperature
+                    count: 12
+                  - type: Room
+                    attrs:
+                      pressure:
+                        types:
+                        - Number
+                      humidity:
+                        types:
+                        - percentage
+                      temperature:
+                        types:
+                        - urn:phenomenum:temperature
+                    count: 7
+          description: ""
+      operationId: List Entity Types
+      summary: List Entity Types
+      description: |-
+        If the `values` option is not in use, this operation returns a JSON array with the entity types.
+        Each element is a JSON object with information about the type:
+        * `type` : the entity type name.
+        * `attrs` : the set of attribute names along with all the entities of such type, represented in
+          a JSON object whose keys are the attribute names and whose values contain information of such
+          attributes (in particular a list of the types used by attributes with that name along with all the
+          entities).
+        * `count` : the number of entities belonging to that type.
+        If the `values` option is used, the operation returns a JSON array with a list of entity type
+        names as strings.
+        Results are ordered by entity `type` in alphabetical order.
+        Response code:
+        * Successful operation uses 200 OK
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2/types/?limit=10&offset=20
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "[  {    \"type\": \"Car\",    \"attrs\": {      \"speed\": {    \
+            \    \"types\": [ \"Number\" ]      },      \"fuel\": {        \"types\"\
+            : [ \"gasoline\", \"diesel\" ]      },      \"temperature\": {       \
+            \ \"types\": [ \"urn:phenomenum:temperature\" ]      }    },    \"count\"\
+            : 12  },  {    \"type\": \"Room\",    \"attrs\": {      \"pressure\":\
+            \ {        \"types\": [ \"Number\" ]      },      \"humidity\": {    \
+            \    \"types\": [ \"percentage\" ]      },      \"temperature\": {   \
+            \     \"types\": [ \"urn:phenomenum:temperature\" ]      }    },    \"\
+            count\": 7  }]"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: List Entity Types1
+        x-testDescription: |-
+          If the `values` option is not in use, this operation returns a JSON array with the entity types.
+          Each element is a JSON object with information about the type:
+          * `type` : the entity type name.
+          * `attrs` : the set of attribute names along with all the entities of such type, represented in
+            a JSON object whose keys are the attribute names and whose values contain information of such
+            attributes (in particular a list of the types used by attributes with that name along with all the
+            entities).
+          * `count` : the number of entities belonging to that type.
+          If the `values` option is used, the operation returns a JSON array with a list of entity type
+          names as strings.
+          Results are ordered by entity `type` in alphabetical order.
+          Response code:
+          * Successful operation uses 200 OK
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/types/{entityType}:
+    get:
+      tags:
+      - Types
+      parameters:
+      - examples:
+          Room:
+            value: Room
+          Car:
+            value: Car
+        name: entityType
+        description: Entity Type
+        schema:
+          type: string
+        in: path
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveEntityTypeResponse'
+              examples:
+                Room:
+                  value:
+                    attrs:
+                      pressure:
+                        types:
+                        - Number
+                      humidity:
+                        types:
+                        - percentage
+                      temperature:
+                        types:
+                        - urn:phenomenum:temperature
+                    count: 7
+                Car:
+                  value:
+                    attrs:
+                      speed:
+                        types:
+                        - Number
+                      fuel:
+                        types:
+                        - gasoline
+                        - diesel
+                      temperature:
+                        types:
+                        - urn:phenomenum:temperature
+                    count: 12
+          description: ""
+      operationId: Retrieve entity type
+      summary: Retrieve entity type
+      description: |-
+        This operation returns a JSON object with information about the type:
+        * `attrs` : the set of attribute names along with all the entities of such type, represented in
+          a JSON object whose keys are the attribute names and whose values contain information of such
+          attributes (in particular a list of the types used by attributes with that name along with all the
+          entities).
+        * `count` : the number of entities belonging to that type.
+        Response code:
+        * Successful operation uses 200 OK
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2/types/Room
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: "  {    \"attrs\": {      \"pressure\": {        \"types\": [ \"Number\"\
+            \ ]      },      \"humidity\": {        \"types\": [ \"percentage\" ]\
+            \      },      \"temperature\": {        \"types\": [ \"urn:phenomenum:temperature\"\
+            \ ]      }    },    \"count\": 7  }"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Retrieve entity type1
+        x-testDescription: |-
+          This operation returns a JSON object with information about the type:
+          * `attrs` : the set of attribute names along with all the entities of such type, represented in
+            a JSON object whose keys are the attribute names and whose values contain information of such
+            attributes (in particular a list of the types used by attributes with that name along with all the
+            entities).
+          * `count` : the number of entities belonging to that type.
+          Response code:
+          * Successful operation uses 200 OK
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/registrations:
+    get:
+      tags:
+      - Registrations
+      parameters:
+      - name: limit
+        description: Limit the number of registrations to be retrieved
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: offset
+        description: Skip a number of registrations
+        schema:
+          format: double
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          type: number
+        in: query
+        required: false
+      - name: options
+        description: Options dictionary
+        schema:
+          enum:
+          - count
+          type: string
+        in: query
+        required: false
+        x-enum-elements:
+        - name: count
+          description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListRegistrationsResponse'
+              examples:
+                registrations:
+                  value:
+                  - id: abcdefg
+                    description: Example Context Source
+                    dataProvided:
+                      entities:
+                      - id: Bcn_Welt
+                        type: Room
+                      attrs:
+                      - temperature
+                    provider:
+                      http:
+                        url: http://contextsource.example.org
+                      supportedForwardingMode: all
+                    expires: 2017-10-31T12:00:00
+                    status: active
+                    forwardingInformation:
+                      timesSent: 12
+                      lastForwarding: 2017-10-06T16:00:00Z
+                      lastSuccess: 2017-10-06T16:00:00Z
+                      lastFailure: 2017-10-05T16:00:00Z
+          description: ""
+      operationId: List Registrations
+      summary: List Registrations
+      description: Lists all the context provider registrations present in the system.
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /v2/registrations?limit=10&offset=20
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+          body: "[  {    \"id\": \"abcdefg\",    \"description\": \"Example Context\
+            \ Source\",    \"dataProvided\": {      \"entities\": [        {     \
+            \     \"id\": \"Bcn_Welt\",          \"type\": \"Room\"        }     \
+            \ ],      \"attrs\": [        \"temperature\"      ]    },    \"provider\"\
+            : {      \"http\": {        \"url\": \"http://contextsource.example.org\"\
+            \      },      \"supportedForwardingMode\": \"all\"    },    \"expires\"\
+            : \"2017-10-31T12:00:00\",    \"status\": \"active\",    \"forwardingInformation\"\
+            : {      \"timesSent\": 12,      \"lastForwarding\": \"2017-10-06T16:00:00.00Z\"\
+            ,      \"lastSuccess\": \"2017-10-06T16:00:00.00Z\",      \"lastFailure\"\
+            : \"2017-10-05T16:00:00.00Z\"    }  }]"
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: List Registrations1
+        x-testDescription: Lists all the context provider registrations present in
+          the system.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRegistrationRequest'
+        required: true
+      tags:
+      - Registrations
+      responses:
+        "201":
+          description: ""
+      operationId: Create Registration
+      summary: Create Registration
+      description: |-
+        Creates a new context provider registration. This is typically used for binding context sources
+        as providers of certain data.
+        The registration is represented by a JSON object as described at the beginning of this section.
+        Response:
+        * Successful operation uses 201 Created
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: POST
+          uri: /v2/registrations
+          headers:
+            Content-Type: application/json
+          body: "{  \"description\": \"Relative Humidity Context Source\",  \"dataProvided\"\
+            : {    \"entities\": [      {        \"id\": \"room2\",        \"type\"\
+            : \"Room\"      }    ],    \"attrs\": [      \"relativeHumidity\"    ]\
+            \  },  \"provider\": {    \"http\":{       \"url\": \"http://localhost:1234\"\
+            \    }  }}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Location: /v2/registrations/abcde98765
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Create Registration1
+        x-testDescription: |-
+          Creates a new context provider registration. This is typically used for binding context sources
+          as providers of certain data.
+          The registration is represented by a JSON object as described at the beginning of this section.
+          Response:
+          * Successful operation uses 201 Created
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /v2/subscriptions/{subscriptionId}:
+    get:
+      tags:
+      - Subscriptions
+      parameters:
+      - examples:
+          abcdefgh-subscription:
+            value: abcedfgh
+          hijklmn-subscription:
+            value: hijklmn
+        name: subscriptionId
+        description: subscription Id.
+        schema:
+          type: string
+        in: path
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSubscriptionsResponse'
+              examples:
+                hijklmn-subscription:
+                  value:
+                    id: hijklmn
+                    description: Another subscription to rule them all
+                    subject:
+                      entities:
+                      - id: Car1
+                        type: Car
+                      condition:
+                        attrs:
+                        - 'speed '
+                        expression:
+                          q: speed>80
+                    notification:
+                      httpCustom:
+                        url: http://localhost:5678
+                        headers:
+                          X-MyHeader: foo
+                        qs:
+                          authToken: bar
+                      attrsFormat: keyValues
+                      attrs:
+                      - speed
+                      timesSent: 3
+                      lastNotification: 2019-10-05T16:00:00Z
+                      lastFailure: 2019-10-06T16:00:00Z
+                    expires: 2020-04-05T14:00:00Z
+                    status: failed
+                    throttling: 5
+                abcdefgh-subscription:
+                  value:
+                    id: abcdefg
+                    description: One subscription to rule them all
+                    subject:
+                      entities:
+                      - id: Bcn_Welt
+                        type: Room
+                      condition:
+                        attrs:
+                        - 'temperature '
+                        expression:
+                          q: temperature>40
+                    notification:
+                      httpCustom:
+                        url: http://localhost:1234
+                        headers:
+                          X-MyHeader: foo
+                        qs:
+                          authToken: bar
+                      attrsFormat: keyValues
+                      attrs:
+                      - temperature
+                      - humidity
+                      timesSent: 12
+                      lastNotification: 2015-10-05T16:00:00Z
+                      lastFailure: 2015-10-06T16:00:00Z
+                    expires: 2016-04-05T14:00:00Z
+                    status: failed
+                    throttling: 5
+          description: ""
+      operationId: Retrieve Subscription
+      summary: Retrieve Subscription
+      description: |-
+        The response is the subscription represented by a JSON object as described at the beginning of this
+        section.
+        Response:
+        * Successful operation uses 200 OK
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      tags:
+      - Subscriptions
+      parameters:
+      - examples:
+          hijkmln-subscription:
+            value: hijklmn
+        name: subscriptionId
+        description: subscription Id.
+        schema:
+          type: string
+        in: path
+        required: true
+      responses:
+        "204":
+          description: ""
+      operationId: Delete subscription
+      summary: Delete subscription
+      description: |-
+        Cancels subscription.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: DELETE
+          uri: /v2/subscriptions/abcdef
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Delete subscription1
+        x-testDescription: |-
+          Cancels subscription.
+          Response:
+          * Successful operation uses 204 No Content
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    patch:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSubscriptionRequest'
+            examples:
+              hijklmn-subscription:
+                value:
+                  expires: 2020-05-05T14:00:00Z
+              abcdefgh-subcription:
+                value:
+                  status: inactive
+                  expires: 2020-05-05T14:00:00Z
+        required: true
+      tags:
+      - Subscriptions
+      parameters:
+      - examples:
+          hijklmn-subscription:
+            value: hijklmn
+          abcdefgh-subscription:
+            value: abcdefgh
+        name: subscriptionId
+        description: subscription Id.
+        schema:
+          type: string
+        in: path
+        required: true
+      responses:
+        "204":
+          description: ""
+      operationId: Update Subscription
+      summary: Update Subscription
+      description: |-
+        Only the fields included in the request are updated in the subscription.
+        Response:
+        * Successful operation uses 204 No Content
+        * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+          more details.
+      x-unitTests:
+      - request:
+          method: PATCH
+          uri: /v2/subscriptions/abcdef
+          headers:
+            Content-Type: application/json
+          body: "{  \"expires\": \"2016-04-05T14:00:00.00Z\"}"
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers: {}
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Update Subscription1
+        x-testDescription: |-
+          Only the fields included in the request are updated in the subscription.
+          Response:
+          * Successful operation uses 204 No Content
+          * Errors use a non-2xx and (optionally) an error payload. See subsection on "Error Responses" for
+            more details.
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+components:
+  schemas:
+    RetrieveApiResourcesResponse:
+      title: Retrieve API Resources response
+      required:
+      - entities_url
+      - types_url
+      - subscriptions_url
+      - registrations_url
+      type: object
+      properties:
+        entities_url:
+          description: URL which points to the entities resource
+          type: string
+          example: /v2/entities
+        types_url:
+          description: URL which points to the types resource
+          type: string
+          example: /v2/types
+        subscriptions_url:
+          description: |-
+            URL which points to the
+            subscriptions resource
+          type: string
+          example: /v2/subscriptions
+        registrations_url:
+          description: |-
+            URL which points to the
+            registrations resource
+          type: string
+          example: /v2/registrations
+      example:
+        entities_url: /v2/entities
+        types_url: /v2/types
+        subscriptions_url: /v2/subscriptions
+        registrations_url: /v2/registrations
+    Options:
+      title: options
+      enum:
+      - count
+      - keyValues
+      - values
+      - unique
+      type: string
+      example: count
+      x-enum-elements:
+      - name: count
+        description: ""
+      - name: keyValues
+        description: ""
+      - name: values
+        description: ""
+      - name: unique
+        description: ""
+    ListEntitiesResponse:
+      title: List Entities response
+      required:
+      - type
+      - id
+      type: object
+      properties:
+        type:
+          description: ""
+          type: string
+          example: Room
+        id:
+          description: ""
+          type: string
+          example: DC_S1-D41
+        temperature:
+          description: ""
+          type: object
+          example:
+            value: 35.6
+            type: Number
+            metadata: {}
+        speed:
+          description: ""
+          type: object
+          example:
+            value: 100
+            type: number
+            metadata:
+              accuracy:
+                value: 2
+                type: Number
+              timestamp:
+                value: 2015-06-04T07:20:27.378Z
+                type: DateTime
+      example:
+        type: Room
+        id: DC_S1-D41
+        temperature:
+          value: 35.6
+          type: Number
+          metadata: {}
+    Options3:
+      title: options3
+      enum:
+      - keyValues
+      - upsert
+      type: string
+      example: keyValues
+      x-enum-elements:
+      - name: keyValues
+        description: ""
+      - name: upsert
+        description: ""
+    CreateEntityRequest:
+      title: Create Entity request
+      required:
+      - type
+      - id
+      - temperature
+      - humidity
+      - location
+      type: object
+      properties:
+        type:
+          description: ""
+          type: string
+          example: Room
+        id:
+          description: ""
+          type: string
+          example: Bcn-Welt
+        temperature:
+          description: ""
+          type: object
+          example:
+            value: 21.7
+        humidity:
+          description: ""
+          type: object
+          example:
+            value: 60
+        location:
+          description: ""
+          type: object
+          example:
+            value: "41.3763726, 2.1864475"
+            type: geo:point
+            metadata:
+              crs:
+                value: WGS84
+      example:
+        type: Room
+        id: Bcn-Welt
+        temperature:
+          value: 21.7
+        humidity:
+          value: 60
+        location:
+          value: "41.3763726, 2.1864475"
+          type: geo:point
+          metadata:
+            crs:
+              value: WGS84
+    Options6:
+      title: options6
+      enum:
+      - keyValues
+      - values
+      - unique
+      type: string
+      example: keyValues
+      x-enum-elements:
+      - name: keyValues
+        description: ""
+      - name: values
+        description: ""
+      - name: unique
+        description: ""
+    RetrieveEntityResponse:
+      title: Retrieve Entity response
+      required:
+      - type
+      - id
+      - temperature
+      - humidity
+      - location
+      type: object
+      properties:
+        type:
+          description: ""
+          type: string
+          example: Room
+        id:
+          description: ""
+          type: string
+          example: Bcn_Welt
+        temperature:
+          description: ""
+          type: object
+          example:
+            value: 21.7
+            type: Number
+        humidity:
+          description: ""
+          type: object
+          example:
+            value: 60
+            type: Number
+        location:
+          description: ""
+          type: object
+          example:
+            value: "41.3763726, 2.1864475"
+            type: geo:point
+            metadata:
+              crs:
+                value: WGS84
+                type: Text
+      example:
+        type: Room
+        id: Bcn_Welt
+        temperature:
+          value: 21.7
+          type: Number
+        humidity:
+          value: 60
+          type: Number
+        location:
+          value: "41.3763726, 2.1864475"
+          type: geo:point
+          metadata:
+            crs:
+              value: WGS84
+              type: Text
+    RetrieveEntityAttributesResponse:
+      title: Retrieve Entity Attributes response
+      required:
+      - temperature
+      - humidity
+      - location
+      type: object
+      properties:
+        temperature:
+          description: ""
+          type: object
+          example:
+            value: 21.7
+            type: Number
+        humidity:
+          description: ""
+          type: object
+          example:
+            value: 60
+            type: Number
+        location:
+          description: ""
+          type: object
+          example:
+            value: "41.3763726, 2.1864475"
+            type: geo:point
+            metadata:
+              crs:
+                value: WGS84
+                type: Text
+      example:
+        temperature:
+          value: 21.7
+          type: Number
+        humidity:
+          value: 60
+          type: Number
+        location:
+          value: "41.3763726, 2.1864475"
+          type: geo:point
+          metadata:
+            crs:
+              value: WGS84
+              type: Text
+    Options10:
+      title: options10
+      enum:
+      - append
+      - keyValues
+      type: string
+      example: append
+      x-enum-elements:
+      - name: append
+        description: ""
+      - name: keyValues
+        description: ""
+    UpdateOrAppendEntityAttributesRequest:
+      title: Update or Append Entity Attributes request
+      required:
+      - ambientNoise
+      type: object
+      properties:
+        ambientNoise:
+          description: ""
+          type: object
+          example:
+            value: 31.5
+    Options12:
+      title: options12
+      enum:
+      - keyValues
+      type: string
+      example: keyValues
+      x-enum-elements:
+      - name: keyValues
+        description: ""
+    UpdateExistingEntityAttributesRequest:
+      title: Update Existing Entity Attributes request
+      required:
+      - temperature
+      - seatNumber
+      type: object
+      properties:
+        temperature:
+          description: ""
+          type: object
+          example:
+            value: 25.5
+        seatNumber:
+          description: ""
+          type: object
+          example:
+            value: 6
+    ReplaceAllEntityAttributesRequest:
+      title: Replace all entity attributes request
+      required:
+      - temperature
+      - seatNumber
+      type: object
+      properties:
+        temperature:
+          description: ""
+          type: object
+          example:
+            value: 25.5
+        seatNumber:
+          description: ""
+          type: object
+          example:
+            value: 6
+    GetAttributeDataResponse:
+      title: Get attribute data response
+      required:
+      - value
+      - type
+      - metadata
+      type: object
+      properties:
+        value:
+          format: double
+          description: ""
+          type: number
+          example: 21.7
+        type:
+          description: ""
+          type: string
+          example: Number
+        metadata:
+          description: ""
+          type: object
+          example: {}
+      example:
+        value: 21.7
+        type: Number
+        metadata: {}
+    UpdateAttributeDataRequest:
+      title: Update Attribute Data request
+      required:
+      - value
+      - metadata
+      type: object
+      properties:
+        value:
+          format: double
+          description: ""
+          type: number
+          example: 25
+        metadata:
+          description: ""
+          type: object
+          example:
+            unitCode:
+              value: CEL
+      example:
+        value: 25
+        metadata:
+          unitCode:
+            value: CEL
+    GetAttributeValueResponse:
+      title: Get Attribute Value response
+      required:
+      - address
+      - zipCode
+      - city
+      - country
+      type: object
+      properties:
+        address:
+          description: ""
+          type: string
+          example: Ronda de la Comunicacion s/n
+        zipCode:
+          format: int32
+          description: ""
+          type: integer
+          example: 28050
+        city:
+          description: ""
+          type: string
+          example: Madrid
+        country:
+          description: ""
+          type: string
+          example: Spain
+      example:
+        address: Ronda de la Comunicacion s/n
+        zipCode: 28050
+        city: Madrid
+        country: Spain
+    UpdateAttributeValueRequest:
+      title: Update Attribute Value request
+      required:
+      - address
+      - zipCode
+      - city
+      - country
+      type: object
+      properties:
+        address:
+          description: ""
+          type: string
+          example: Ronda de la Comunicacion s/n
+        zipCode:
+          format: int32
+          description: ""
+          type: integer
+          example: 28050
+        city:
+          description: ""
+          type: string
+          example: Madrid
+        country:
+          description: ""
+          type: string
+          example: Spain
+      example:
+        address: Ronda de la Comunicacion s/n
+        zipCode: 28050
+        city: Madrid
+        country: Spain
+    Options20:
+      title: options20
+      enum:
+      - count
+      - values
+      type: string
+      example: count
+      x-enum-elements:
+      - name: count
+        description: ""
+      - name: values
+        description: ""
+    ListEntityTypesResponse:
+      title: List Entity Types response
+      required:
+      - type
+      - attrs
+      - count
+      type: object
+      properties:
+        type:
+          description: ""
+          type: string
+          example: Car
+        attrs:
+          description: ""
+          type: object
+          example:
+            speed:
+              types:
+              - Number
+            fuel:
+              types:
+              - gasoline
+              - diesel
+            temperature:
+              types:
+              - urn:phenomenum:temperature
+        count:
+          format: int32
+          description: ""
+          type: integer
+          example: 12
+      example:
+        type: Car
+        attrs:
+          speed:
+            types:
+            - Number
+          fuel:
+            types:
+            - gasoline
+            - diesel
+          temperature:
+            types:
+            - urn:phenomenum:temperature
+        count: 12
+    RetrieveEntityTypeResponse:
+      title: Retrieve entity type response
+      required:
+      - attrs
+      - count
+      type: object
+      properties:
+        attrs:
+          description: ""
+          type: object
+          example:
+            pressure:
+              types:
+              - Number
+            humidity:
+              types:
+              - percentage
+            temperature:
+              types:
+              - urn:phenomenum:temperature
+        count:
+          format: int32
+          description: ""
+          type: integer
+          example: 7
+      example:
+        attrs:
+          pressure:
+            types:
+            - Number
+          humidity:
+            types:
+            - percentage
+          temperature:
+            types:
+            - urn:phenomenum:temperature
+        count: 7
+    Options23:
+      title: options23
+      enum:
+      - count
+      type: string
+      example: count
+      x-enum-elements:
+      - name: count
+        description: ""
+    ListSubscriptionsResponse:
+      title: List Subscriptions response
+      required:
+      - id
+      - description
+      - subject
+      - notification
+      - expires
+      - status
+      - throttling
+      type: object
+      properties:
+        id:
+          description: ""
+          type: string
+          example: abcdefg
+        description:
+          description: ""
+          type: string
+          example: One subscription to rule them all
+        subject:
+          description: ""
+          type: object
+          example:
+            entities:
+            - id: Bcn_Welt
+              type: Room
+            condition:
+              attrs:
+              - 'temperature '
+              expression:
+                q: temperature>40
+        notification:
+          description: ""
+          type: object
+          example:
+            httpCustom:
+              url: http://localhost:1234
+              headers:
+                X-MyHeader: foo
+              qs:
+                authToken: bar
+            attrsFormat: keyValues
+            attrs:
+            - temperature
+            - humidity
+            timesSent: 12
+            lastNotification: 2015-10-05T16:00:00Z
+            lastFailure: 2015-10-06T16:00:00Z
+        expires:
+          description: ""
+          type: string
+          example: 4/5/2016 2:00:00 PM
+        status:
+          description: ""
+          type: string
+          example: failed
+        throttling:
+          format: int32
+          description: ""
+          type: integer
+          example: 5
+      example:
+        id: abcdefg
+        description: One subscription to rule them all
+        subject:
+          entities:
+          - id: Bcn_Welt
+            type: Room
+          condition:
+            attrs:
+            - 'temperature '
+            expression:
+              q: temperature>40
+        notification:
+          httpCustom:
+            url: http://localhost:1234
+            headers:
+              X-MyHeader: foo
+            qs:
+              authToken: bar
+          attrsFormat: keyValues
+          attrs:
+          - temperature
+          - humidity
+          timesSent: 12
+          lastNotification: 2015-10-05T16:00:00Z
+          lastFailure: 2015-10-06T16:00:00Z
+        expires: 2016-04-05T14:00:00Z
+        status: failed
+        throttling: 5
+    CreateSubscriptionRequest:
+      title: Create Subscription request
+      required:
+      - subject
+      - notification
+      type: object
+      properties:
+        description:
+          description: ""
+          type: string
+          example: One subscription to rule them all
+        subject:
+          description: ""
+          type: object
+          example:
+            entities:
+            - idPattern: .*
+              type: Room
+            condition:
+              attrs:
+              - temperature
+              expression:
+                q: temperature>40
+        notification:
+          description: ""
+          type: object
+          example:
+            http:
+              url: http://localhost:1234
+            attrs:
+            - temperature
+            - humidity
+        expires:
+          description: ""
+          type: string
+          example: 4/5/2016 2:00:00 PM
+        throttling:
+          format: int32
+          description: ""
+          type: integer
+          example: 5
+      example:
+        description: One subscription to rule them all
+        subject:
+          entities:
+          - idPattern: .*
+            type: Room
+          condition:
+            attrs:
+            - temperature
+            expression:
+              q: temperature>40
+        notification:
+          http:
+            url: http://localhost:1234
+          attrs:
+          - temperature
+          - humidity
+        expires: 2016-04-05T14:00:00Z
+        throttling: 5
+    UpdateSubscriptionRequest:
+      title: Update Subscription request
+      required:
+      - expires
+      type: object
+      properties:
+        expires:
+          description: ""
+          type: string
+          example: 4/5/2016 2:00:00 PM
+      example:
+        expires: 2016-04-05T14:00:00Z
+    ListRegistrationsResponse:
+      title: List Registrations response
+      required:
+      - id
+      - description
+      - dataProvided
+      - provider
+      - expires
+      - status
+      - forwardingInformation
+      type: object
+      properties:
+        id:
+          description: ""
+          type: string
+          example: abcdefg
+        description:
+          description: ""
+          type: string
+          example: Example Context Source
+        dataProvided:
+          description: ""
+          type: object
+          example:
+            entities:
+            - id: Bcn_Welt
+              type: Room
+            attrs:
+            - temperature
+        provider:
+          description: ""
+          type: object
+          example:
+            http:
+              url: http://contextsource.example.org
+            supportedForwardingMode: all
+        expires:
+          description: ""
+          type: string
+          example: 10/31/2017 12:00:00 PM
+        status:
+          description: ""
+          type: string
+          example: active
+        forwardingInformation:
+          description: ""
+          type: object
+          example:
+            timesSent: 12
+            lastForwarding: 2017-10-06T16:00:00Z
+            lastSuccess: 2017-10-06T16:00:00Z
+            lastFailure: 2017-10-05T16:00:00Z
+      example:
+        id: abcdefg
+        description: Example Context Source
+        dataProvided:
+          entities:
+          - id: Bcn_Welt
+            type: Room
+          attrs:
+          - temperature
+        provider:
+          http:
+            url: http://contextsource.example.org
+          supportedForwardingMode: all
+        expires: 2017-10-31T12:00:00
+        status: active
+        forwardingInformation:
+          timesSent: 12
+          lastForwarding: 2017-10-06T16:00:00Z
+          lastSuccess: 2017-10-06T16:00:00Z
+          lastFailure: 2017-10-05T16:00:00Z
+    CreateRegistrationRequest:
+      title: Create Registration request
+      required:
+      - description
+      - dataProvided
+      - provider
+      type: object
+      properties:
+        description:
+          description: ""
+          type: string
+          example: Relative Humidity Context Source
+        dataProvided:
+          description: ""
+          type: object
+          example:
+            entities:
+            - id: room2
+              type: Room
+            attrs:
+            - relativeHumidity
+        provider:
+          description: ""
+          type: object
+          example:
+            http:
+              url: http://localhost:1234
+      example:
+        description: Relative Humidity Context Source
+        dataProvided:
+          entities:
+          - id: room2
+            type: Room
+          attrs:
+          - relativeHumidity
+        provider:
+          http:
+            url: http://localhost:1234
+    RetrieveRegistrationResponse:
+      title: Retrieve Registration response
+      required:
+      - id
+      - description
+      - dataProvided
+      - provider
+      - expires
+      - status
+      - forwardingInformation
+      type: object
+      properties:
+        id:
+          description: ""
+          type: string
+          example: abcdefg
+        description:
+          description: ""
+          type: string
+          example: Example Context Source
+        dataProvided:
+          description: ""
+          type: object
+          example:
+            entities:
+            - id: Bcn_Welt
+              type: Room
+            attrs:
+            - temperature
+        provider:
+          description: ""
+          type: object
+          example:
+            http:
+              url: http://contextsource.example.org
+            supportedForwardingMode: all
+        expires:
+          description: ""
+          type: string
+          example: 10/31/2017 12:00:00 PM
+        status:
+          description: ""
+          type: string
+          example: failed
+        forwardingInformation:
+          description: ""
+          type: object
+          example:
+            timesSent: 12
+            lastForwarding: 2017-10-06T16:00:00Z
+            lastFailure: 2017-10-06T16:00:00Z
+            lastSuccess: 2017-10-05T18:25:00Z
+      example:
+        id: abcdefg
+        description: Example Context Source
+        dataProvided:
+          entities:
+          - id: Bcn_Welt
+            type: Room
+          attrs:
+          - temperature
+        provider:
+          http:
+            url: http://contextsource.example.org
+          supportedForwardingMode: all
+        expires: 2017-10-31T12:00:00
+        status: failed
+        forwardingInformation:
+          timesSent: 12
+          lastForwarding: 2017-10-06T16:00:00Z
+          lastFailure: 2017-10-06T16:00:00Z
+          lastSuccess: 2017-10-05T18:25:00Z
+    UpdateRegistrationRequest:
+      title: Update Registration request
+      required:
+      - expires
+      type: object
+      properties:
+        expires:
+          description: ""
+          type: string
+          example: 10/4/2017 12:00:00 AM
+      example:
+        expires: 2017-10-04T00:00:00
+    UpdateRequest:
+      title: Update request
+      required:
+      - actionType
+      - entities
+      type: object
+      properties:
+        actionType:
+          description: ""
+          type: string
+          example: append
+        entities:
+          description: ""
+          type: array
+          items:
+            type: object
+          example:
+          - type: Room
+            id: Bcn-Welt
+            temperature:
+              value: 21.7
+            humidity:
+              value: 60
+          - type: Room
+            id: Mad_Aud
+            temperature:
+              value: 22.9
+            humidity:
+              value: 85
+      example:
+        actionType: append
+        entities:
+        - type: Room
+          id: Bcn-Welt
+          temperature:
+            value: 21.7
+          humidity:
+            value: 60
+        - type: Room
+          id: Mad_Aud
+          temperature:
+            value: 22.9
+          humidity:
+            value: 85
+    QueryRequest:
+      title: Query request
+      required:
+      - entities
+      - attrs
+      - expression
+      - metadata
+      type: object
+      properties:
+        entities:
+          description: ""
+          type: array
+          items:
+            type: object
+          example:
+          - idPattern: .*
+            type: Room
+          - id: Car
+            type: P-9873-K
+        attrs:
+          description: ""
+          type: array
+          items:
+            type: string
+          example:
+          - temperature
+          - humidity
+        expression:
+          description: ""
+          type: object
+          example:
+            q: temperature>20
+        metadata:
+          description: ""
+          type: array
+          items:
+            type: string
+          example:
+          - accuracy
+          - timestamp
+      example:
+        entities:
+        - idPattern: .*
+          type: Room
+        - id: Car
+          type: P-9873-K
+        attrs:
+        - temperature
+        - humidity
+        expression:
+          q: temperature>20
+        metadata:
+        - accuracy
+        - timestamp
+    QueryResponse:
+      title: Query response
+      required:
+      - type
+      - id
+      - temperature
+      type: object
+      properties:
+        type:
+          description: ""
+          type: string
+          example: Room
+        id:
+          description: ""
+          type: string
+          example: DC_S1-D41
+        temperature:
+          description: ""
+          type: object
+          example:
+            value: 35.6
+            type: Number
+      example:
+        type: Room
+        id: DC_S1-D41
+        temperature:
+          value: 35.6
+          type: Number
+    NotifyRequest:
+      title: Notify request
+      required:
+      - subscriptionId
+      - data
+      type: object
+      properties:
+        subscriptionId:
+          description: ""
+          type: string
+          example: 5aeb0ee97d4ef10a12a0262f
+        data:
+          description: ""
+          type: array
+          items:
+            type: object
+          example:
+          - type: Room
+            id: DC_S1-D41
+            temperature:
+              value: 35.6
+              type: Number
+          - type: Room
+            id: Boe-Idearium
+            temperature:
+              value: 22.5
+              type: Number
+      example:
+        subscriptionId: 5aeb0ee97d4ef10a12a0262f
+        data:
+        - type: Room
+          id: DC_S1-D41
+          temperature:
+            value: 35.6
+            type: Number
+        - type: Room
+          id: Boe-Idearium
+          temperature:
+            value: 22.5
+            type: Number
