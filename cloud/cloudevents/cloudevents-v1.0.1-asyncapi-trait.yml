@@ -5,7 +5,7 @@ headers:
   required:
     - ce_specversion
     - ce_id
-    - ce-source
+    - ce_source
     - ce_type
   properties:
     ce_specversion:
