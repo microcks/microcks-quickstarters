@@ -78,17 +78,12 @@ paths:
         - $ref: '#/components/parameters/x-correlator'
 
       x-microcks-operation:
-        dispatcher: JSON_BODY
+        dispatcher: FALLBACK
         dispatcherRules: |
           {
-            "exp": "/name",
-            "operator": "equals",
-            "cases": {
-              "John Doe": "John Doe",
-              "Jane Smith": "Jane Smith",
-              "Federica Sanchez Arjona": "KYC_Match200Example",
-              "default": "InvalidParamCombination"
-            }
+            "dispatcher": "SCRIPT",
+            "dispatcherRules": "def json = new groovy.json.JsonSlurper().parseText(mockRequest.requestContent);\n if (\"Federica Sanchez Arjona\".equals(json.name)) {return \"KYC_Match200Example\"}\n return json.name",
+            "fallback": "NotFound"
           }
 
       requestBody:

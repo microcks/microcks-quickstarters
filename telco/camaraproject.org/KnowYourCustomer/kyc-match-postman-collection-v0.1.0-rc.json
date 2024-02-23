@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "f8e3fa40-5e6e-46c8-b79b-152c316c97b7",
+		"name": "Know Your Customer Match",
+		"description": "version=0.1.0-rc - This API provides the customer with the ability to compare the information it (Service Provider, SP) has for a particular mobile phone user with that on file (and verified) by the mobile phone user's Operator in their own KYC records, in order for the SP to confirm the accuracy of the information and provide a specific service to the mobile phone user.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1278651",
+		"_collection_link": "https://www.postman.com/lbroudoux/workspace/public-workspace/collection/1278651-f8e3fa40-5e6e-46c8-b79b-152c316c97b7?action=share&source=collection_link&creator=1278651"
+	},
+	"item": [
+		{
+			"name": "match",
+			"item": [
+				{
+					"name": "Matching a customer identity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http:///match",
+							"protocol": "http",
+							"path": [
+								"match"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Laurent Broudoux",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phoneNumber\": \"+1234567890\",\n  \"idDocument\": \"LB1234567\",\n  \"name\": \"Laurent Broudoux\",\n  \"givenName\": \"Laurent\",\n  \"familyName\": \"Broudoux\",\n  \"birthdate\": \"1978-12-03\",\n  \"email\": \"laurent@microcks.io\",\n  \"gender\": \"MALE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http:///match",
+									"protocol": "http",
+									"path": [
+										"match"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"phoneNumberMatch\": true,\n    \"idDocumentMatch\": true,\n    \"nameMatch\": true,\n    \"givenNameMatch\": true,\n    \"familyNameMatch\": true,\n    \"birthdateMatch\": true,\n    \"emailMatch\": true,\n    \"genderMatch\": true\n}"
+						},
+						{
+							"name": "Yacine Kheddache",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phoneNumber\": \"+2234567890\",\n  \"idDocument\": \"YK2234567\",\n  \"name\": \"Yacine Kheddache\",\n  \"givenName\": \"Yacine\",\n  \"familyName\": \"Kheddache\",\n  \"birthdate\": \"1974-09-01\",\n  \"email\": \"yacine@microcks.io\",\n  \"gender\": \"MALE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http:///match",
+									"protocol": "http",
+									"path": [
+										"match"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"phoneNumberMatch\": true,\n    \"idDocumentMatch\": true,\n    \"nameMatch\": true,\n    \"givenNameMatch\": true,\n    \"familyNameMatch\": true,\n    \"birthdateMatch\": true,\n    \"emailMatch\": true,\n    \"genderMatch\": true\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
