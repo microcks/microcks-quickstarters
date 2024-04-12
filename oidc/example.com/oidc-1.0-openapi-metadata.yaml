@@ -1,0 +1,90 @@
+openapi: 3.0.1
+info:
+  title: OIDC
+  version: 1.0
+paths:
+  /.well-known/jwks.json:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                test:
+                  value: |-
+                    {"keys":[{
+                      "kty":"RSA",
+                      "use":"sig",
+                      "alg":"RS256",
+                      "kid":"1",
+                      "n":"iJw33l1eVAsGoRlSyo-FCimeOc-AaZbzQ2iESA3Nkuo3TFb1zIkmt0kzlnWVGt48dkaIl13Vdefh9hqw_r9yNF8xZqX1fp0PnCWc5M_TX_ht5fm9y0TpbiVmsjeRMWZn4jr3DsFouxQ9aBXUJiu26V0vd2vrECeeAreFT4mtoHY13D2WVeJvboc5mEJcp50JNhxRCJ5UkY8jR_wfUk2Tzz4-fAj5xQaBccXnqJMu_1C6MjoCEiB7G1d13bVPReIeAGRKVJIF6ogoCN8JbrOhc_48lT4uyjbgnd24beatuKWodmWYhactFobRGYo5551cgMe8BoxpVQ4to30cGA0qjQ",
+                      "e":"AQAB"
+                    }]}
+  /token:
+    post:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                test:
+                  value: |-
+                    {
+                      "token_type": "Bearer",
+                      "expires_in": 3600,
+                      "access_token": "DUMMY_ACCESS_TOKEN"
+                    }
+  /tokeninfo:
+    post:
+      x-microcks-operation:
+        # https://microcks.io/documentation/using/advanced/dispatching/#script-dispatcher
+        dispatcher: SCRIPT
+        dispatcherRules: |-
+          switch(mockRequest.requestContent){
+            case ~/token=alice.*/: 
+              return "case_alice"
+            case ~/token=admin.*/:
+              return "case_admin"
+            case ~/token=bob.*/:
+              return "case_bob"
+            default:
+              return "case_default"
+          }
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                case_alice:
+                  value: |-
+                    {
+                      "active": true,
+                      "scope": "user",
+                      "client_id": "myapp",
+                      "username": "jdoe",
+                      "exp": 2047967006
+                    }
+                case_admin:
+                  value: |-
+                    {
+                      "active": true,
+                      "scope": "user admin",
+                      "client_id": "myapp",
+                      "username": "jdoe",
+                      "exp": 2047967006
+                    }
+                case_bob:
+                  value: |-
+                    {
+                      "active": true,
+                      "scope": "app@permission",
+                      "client_id": "myapp",
+                      "username": "jdoe",
+                      "exp": 2047967006
+                    }
+        "400":
+          content:
+            application/json:
+              examples:
+                case_default:
+                  value: ""
