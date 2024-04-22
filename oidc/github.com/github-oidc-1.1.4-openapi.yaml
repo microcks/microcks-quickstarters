@@ -1,0 +1,661 @@
+openapi: 3.1.0
+info:
+  title: GitHub OIDC
+  description: Specification of the GitHub OpenID Connect identity provider.
+  version: 1.1.4
+servers:
+  - url: "https://microcks/rest/GitHub+OIDC/1.1.4/"
+paths:
+  /login/oauth/authorize:
+    get:
+      summary:
+      description:
+      parameters:
+        - name: response_type
+          in: query
+          description: Expected response type
+          schema:
+            type: string
+        - name: client_id
+          in: query
+          description: The client identifier for the OAuth 2.0 client that the token was issued to.
+          schema:
+            type: string
+        - name: scope
+          in: query
+          description: String containing a plus-separated list of scope values
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: Client state that should appear in redirect directive
+          schema:
+            type: string
+        - name: redirect_uri
+          in: query
+          description: Redirect to this URI after successfull authorization
+          schema:
+            type: string
+            format: uri
+      responses:
+        '302':
+          description: Redirect
+          headers:
+            'Location':
+              $ref: '#/components/headers/location'        
+  /login/oauth/access_token:
+    post:
+      summary:
+      description:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  description: The client identifier for the OAuth 2.0 client that the token was issued to.
+                  required: true
+                  type: string
+                client_secret:
+                  description: |
+                    Client Secret. The same Client Secret value MUST NOT be assigned
+                    to multiple Clients. This value is used by Confidential Clients to authenticate
+                    to the Token Endpoint.
+                  required: true
+                  type: string
+                code:
+                  description: |
+                    The code received in the query string when redirected from authorization
+                    page
+                  required: true
+                  type: string
+      responses:
+        "200":
+          description: Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/access-token"
+            application/x-www-form-urlencoded:
+              schema:
+                "$ref": "#/components/schemas/access-token"      
+  /user:
+    get:
+      summary: Get the authenticated user
+      description: OAuth app tokens and personal access tokens (classic) need the
+        `user` scope in order for the response to include private profile information.
+      tags:
+      - users
+      operationId: users/get-authenticated
+      externalDocs:
+        description: API method documentation
+        url: https://docs.github.com/rest/users/users#get-the-authenticated-user
+      parameters:
+        - name: Authorization
+          in: headers
+          description: The Bearer token bound to authorization
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - "$ref": "#/components/schemas/private-user"
+                - "$ref": "#/components/schemas/public-user"
+        '304':
+          "$ref": "#/components/responses/not_modified"
+        '403':
+          "$ref": "#/components/responses/forbidden"
+        '401':
+          "$ref": "#/components/responses/requires_authentication"
+  /user/emails:
+    get:
+      summary: List email addresses for the authenticated user
+      description: |-
+        Lists all of your email addresses, and specifies which one is visible
+        to the public.
+
+        OAuth app tokens and personal access tokens (classic) need the `user:email` scope to use this endpoint.
+      tags:
+      - users
+      operationId: users/list-emails-for-authenticated-user
+      externalDocs:
+        description: API method documentation
+        url: https://docs.github.com/rest/users/emails#list-email-addresses-for-the-authenticated-user
+      parameters:
+        - name: Authorization
+          in: headers
+          description: The Bearer token bound to authorization
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/email"
+          headers:
+            Link:
+              "$ref": "#/components/headers/link"
+        '304':
+          "$ref": "#/components/responses/not_modified"
+        '404':
+          "$ref": "#/components/responses/not_found"
+        '403':
+          "$ref": "#/components/responses/forbidden"
+        '401':
+          "$ref": "#/components/responses/requires_authentication"
+components:
+  schemas:
+    access-token:
+      title: Access Token
+      description: Access Token
+      type: object
+      properties:
+        access_token:
+          type: string
+        scope:
+          type: string
+        token_type:
+          type: string
+          enum:
+            - bearer
+      required:
+      - access_token
+      - scope
+      - token_type
+      additionalProperties: false
+    private-user:
+      title: Private User
+      description: Private User
+      type: object
+      properties:
+        login:
+          type: string
+          examples:
+          - octocat
+        id:
+          type: integer
+          examples:
+          - 1
+        node_id:
+          type: string
+          examples:
+          - MDQ6VXNlcjE=
+        avatar_url:
+          type: string
+          format: uri
+          examples:
+          - https://github.com/images/error/octocat_happy.gif
+        gravatar_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - 41d064eb2195891e12d0413f63227ea7
+        url:
+          type: string
+          format: uri
+          examples:
+          - https://api.github.com/users/octocat
+        html_url:
+          type: string
+          format: uri
+          examples:
+          - https://github.com/octocat
+        followers_url:
+          type: string
+          format: uri
+          examples:
+          - https://api.github.com/users/octocat/followers
+        following_url:
+          type: string
+          examples:
+          - https://api.github.com/users/octocat/following{/other_user}
+        gists_url:
+          type: string
+          examples:
+          - https://api.github.com/users/octocat/gists{/gist_id}
+        starred_url:
+          type: string
+          examples:
+          - https://api.github.com/users/octocat/starred{/owner}{/repo}
+        subscriptions_url:
+          type: string
+          format: uri
+          examples:
+          - https://api.github.com/users/octocat/subscriptions
+        organizations_url:
+          type: string
+          format: uri
+          examples:
+          - https://api.github.com/users/octocat/orgs
+        repos_url:
+          type: string
+          format: uri
+          examples:
+          - https://api.github.com/users/octocat/repos
+        events_url:
+          type: string
+          examples:
+          - https://api.github.com/users/octocat/events{/privacy}
+        received_events_url:
+          type: string
+          format: uri
+          examples:
+          - https://api.github.com/users/octocat/received_events
+        type:
+          type: string
+          examples:
+          - User
+        site_admin:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - monalisa octocat
+        company:
+          type:
+          - string
+          - 'null'
+          examples:
+          - GitHub
+        blog:
+          type:
+          - string
+          - 'null'
+          examples:
+          - https://github.com/blog
+        location:
+          type:
+          - string
+          - 'null'
+          examples:
+          - San Francisco
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+          examples:
+          - octocat@github.com
+        hireable:
+          type:
+          - boolean
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+          examples:
+          - There once was...
+        twitter_username:
+          type:
+          - string
+          - 'null'
+          examples:
+          - monalisa
+        public_repos:
+          type: integer
+          examples:
+          - 2
+        public_gists:
+          type: integer
+          examples:
+          - 1
+        followers:
+          type: integer
+          examples:
+          - 20
+        following:
+          type: integer
+          examples:
+          - 0
+        created_at:
+          type: string
+          format: date-time
+          examples:
+          - '2008-01-14T04:33:35Z'
+        updated_at:
+          type: string
+          format: date-time
+          examples:
+          - '2008-01-14T04:33:35Z'
+        private_gists:
+          type: integer
+          examples:
+          - 81
+        total_private_repos:
+          type: integer
+          examples:
+          - 100
+        owned_private_repos:
+          type: integer
+          examples:
+          - 100
+        disk_usage:
+          type: integer
+          examples:
+          - 10000
+        collaborators:
+          type: integer
+          examples:
+          - 8
+        two_factor_authentication:
+          type: boolean
+          examples:
+          - true
+        plan:
+          type: object
+          properties:
+            collaborators:
+              type: integer
+            name:
+              type: string
+            space:
+              type: integer
+            private_repos:
+              type: integer
+          required:
+          - collaborators
+          - name
+          - space
+          - private_repos
+        suspended_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        business_plus:
+          type: boolean
+        ldap_dn:
+          type: string
+      required:
+      - avatar_url
+      - events_url
+      - followers_url
+      - following_url
+      - gists_url
+      - gravatar_id
+      - html_url
+      - id
+      - node_id
+      - login
+      - organizations_url
+      - received_events_url
+      - repos_url
+      - site_admin
+      - starred_url
+      - subscriptions_url
+      - type
+      - url
+      - bio
+      - blog
+      - company
+      - email
+      - followers
+      - following
+      - hireable
+      - location
+      - name
+      - public_gists
+      - public_repos
+      - created_at
+      - updated_at
+      - collaborators
+      - disk_usage
+      - owned_private_repos
+      - private_gists
+      - total_private_repos
+      - two_factor_authentication
+    public-user:
+      title: Public User
+      description: Public User
+      type: object
+      properties:
+        login:
+          type: string
+        id:
+          type: integer
+        node_id:
+          type: string
+        avatar_url:
+          type: string
+          format: uri
+        gravatar_id:
+          type:
+          - string
+          - 'null'
+        url:
+          type: string
+          format: uri
+        html_url:
+          type: string
+          format: uri
+        followers_url:
+          type: string
+          format: uri
+        following_url:
+          type: string
+        gists_url:
+          type: string
+        starred_url:
+          type: string
+        subscriptions_url:
+          type: string
+          format: uri
+        organizations_url:
+          type: string
+          format: uri
+        repos_url:
+          type: string
+          format: uri
+        events_url:
+          type: string
+        received_events_url:
+          type: string
+          format: uri
+        type:
+          type: string
+        site_admin:
+          type: boolean
+        name:
+          type:
+          - string
+          - 'null'
+        company:
+          type:
+          - string
+          - 'null'
+        blog:
+          type:
+          - string
+          - 'null'
+        location:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        hireable:
+          type:
+          - boolean
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        twitter_username:
+          type:
+          - string
+          - 'null'
+        public_repos:
+          type: integer
+        public_gists:
+          type: integer
+        followers:
+          type: integer
+        following:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        plan:
+          type: object
+          properties:
+            collaborators:
+              type: integer
+            name:
+              type: string
+            space:
+              type: integer
+            private_repos:
+              type: integer
+          required:
+          - collaborators
+          - name
+          - space
+          - private_repos
+        suspended_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        private_gists:
+          type: integer
+          examples:
+          - 1
+        total_private_repos:
+          type: integer
+          examples:
+          - 2
+        owned_private_repos:
+          type: integer
+          examples:
+          - 2
+        disk_usage:
+          type: integer
+          examples:
+          - 1
+        collaborators:
+          type: integer
+          examples:
+          - 3
+      required:
+      - avatar_url
+      - events_url
+      - followers_url
+      - following_url
+      - gists_url
+      - gravatar_id
+      - html_url
+      - id
+      - node_id
+      - login
+      - organizations_url
+      - received_events_url
+      - repos_url
+      - site_admin
+      - starred_url
+      - subscriptions_url
+      - type
+      - url
+      - bio
+      - blog
+      - company
+      - email
+      - followers
+      - following
+      - hireable
+      - location
+      - name
+      - public_gists
+      - public_repos
+      - created_at
+      - updated_at
+      additionalProperties: false
+    email:
+      title: Email
+      description: Email
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          examples:
+          - octocat@github.com
+        primary:
+          type: boolean
+          examples:
+          - true
+        verified:
+          type: boolean
+          examples:
+          - true
+        visibility:
+          type:
+          - string
+          - 'null'
+          examples:
+          - public
+      required:
+      - email
+      - primary
+      - verified
+      - visibility
+    basic-error:
+      title: Basic Error
+      description: Basic Error
+      type: object
+      properties:
+        message:
+          type: string
+        documentation_url:
+          type: string
+        url:
+          type: string
+        status:
+          type: string
+  responses:
+    not_found:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/basic-error"
+    not_modified:
+      description: Not modified
+    requires_authentication:
+      description: Requires authentication
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/basic-error"
+    forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/basic-error"
+  headers:
+    link:
+      schema:
+        type: string
+    location:
+      schema:
+        type: string

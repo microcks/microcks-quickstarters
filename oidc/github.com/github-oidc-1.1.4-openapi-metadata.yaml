@@ -1,0 +1,223 @@
+openapi: 3.1.0
+info:
+  title: GitHub OIDC
+  version: 1.1.4
+paths:
+  /login/oauth/authorize:
+    get:
+      x-microcks-operation:
+        # https://microcks.io/documentation/using/advanced/dispatching/#script-dispatcher
+        dispatcher: FALLBACK
+        dispatcherRules: |-
+          {
+            "dispatcher": "URI_PARAMS",
+            "dispatcherRules": "response_type",
+            "fallback": "generic"
+          }
+      parameters:
+        - name: response_type
+          in: query
+          examples:
+            generic:
+              value: code
+        - name: client_id
+          in: query
+          examples:
+            generic:
+              value: GHCLIENT
+        - name: scope
+          in: query
+          examples:
+            generic:
+              value: openid+user:email
+        - name: state
+          in: query
+          examples:
+            generic:
+              value: e956e017-5e13-4c9d-b83b-6dd6337a6a86
+        - name: redirect_uri
+          in: query
+          examples:
+            generic:
+              value: http://localhost:8080/Login/githubLoginSuccess
+      responses:
+        302:
+          x-microcks-refs: 
+            - generic
+          headers:
+            Location:
+              examples:
+                generic:
+                  value: "{{ request.params[redirect_uri] }}?state={{ request.params[state] }}&code={{ uuid() }}"
+
+  /login/oauth/access_token:
+    post:
+      responses:
+        "200":
+          description: Response
+          content:
+            application/json:
+              examples:
+                generic json:
+                  value:
+                    access_token: "{{ uuid() }}"
+                    scope: repo,gist
+                    token_type: bearer
+            application/x-www-form-urlencoded:
+              examples:
+                generic form:
+                  value: "access_token={{ uuid() }}&scope=repo%2Cgist&token_type=bearer"
+  /user:
+    get:
+      x-microcks-operation:
+        # https://microcks.io/documentation/using/advanced/dispatching/#script-dispatcher
+        dispatcher: SCRIPT
+        dispatcherRules: |-
+          def headers = mockRequest.getRequestHeaders()
+          def token = headers.get("Authorization", "octocat")
+          switch(token){
+            case ~/Bearer lbroudoux/: 
+              return "lbroudoux"
+            default:
+              return "octocat"
+          }
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                octocat:
+                  value:
+                    login: octocat
+                    id: 1
+                    node_id: MDQ6VXNlcjE=
+                    avatar_url: https://github.com/images/error/octocat_happy.gif
+                    gravatar_id: 41d064eb2195891e12d0413f63227ea7
+                    url: https://api.github.com/users/octocat
+                    html_url: https://github.com/octocat
+                    followers_url: https://api.github.com/users/octocat/followers
+                    following_url: https://api.github.com/users/octocat/following{/other_user}
+                    gists_url: https://api.github.com/users/octocat/gists{/gist_id}
+                    starred_url: https://api.github.com/users/octocat/starred{/owner}{/repo}
+                    subscriptions_url: https://api.github.com/users/octocat/subscriptions
+                    organizations_url: https://api.github.com/users/octocat/orgs
+                    repos_url: https://api.github.com/users/octocat/repos
+                    events_url: https://api.github.com/users/octocat/events{/privacy}
+                    received_events_url: https://api.github.com/users/octocat/received_events
+                    type: User
+                    site_admin: false
+                    name: monalisa octocat
+                    company: GitHub
+                    blog:  https://github.com/blog
+                    location: San Francisco
+                    email: octocat@github.com
+                    hireable: false
+                    bio: There once was...
+                    twitter_username: monalisa
+                    public_repos: 2
+                    public_gists: 1
+                    followers: 20
+                    following: 0
+                    created_at: '2008-01-14T04:33:35Z'
+                    updated_at: '2008-01-14T04:33:35Z'
+                    private_gists: 81
+                    total_private_repos: 100
+                    owned_private_repos: 100
+                    disk_usage: 10000
+                    collaborators: 8
+                    two_factor_authentication: true
+                    plan:
+                      name: Medium
+                      space: 400
+                      private_repos: 20
+                      collaborators: 0
+                lbroudoux:
+                  value: |-
+                    {
+                      "login": "lbroudoux",
+                      "id": 1538635,
+                      "node_id": "MDQ6VXNlcjE1Mzg2MzU=",
+                      "avatar_url": "https://avatars.githubusercontent.com/u/1538635?v=4",
+                      "gravatar_id": "",
+                      "url": "https://api.github.com/users/lbroudoux",
+                      "html_url": "https://github.com/lbroudoux",
+                      "followers_url": "https://api.github.com/users/lbroudoux/followers",
+                      "following_url": "https://api.github.com/users/lbroudoux/following{/other_user}",
+                      "gists_url": "https://api.github.com/users/lbroudoux/gists{/gist_id}",
+                      "starred_url": "https://api.github.com/users/lbroudoux/starred{/owner}{/repo}",
+                      "subscriptions_url": "https://api.github.com/users/lbroudoux/subscriptions",
+                      "organizations_url": "https://api.github.com/users/lbroudoux/orgs",
+                      "repos_url": "https://api.github.com/users/lbroudoux/repos",
+                      "events_url": "https://api.github.com/users/lbroudoux/events{/privacy}",
+                      "received_events_url": "https://api.github.com/users/lbroudoux/received_events",
+                      "type": "User",
+                      "site_admin": false,
+                      "name": "Laurent Broudoux",
+                      "company": "Postman, Inc",
+                      "blog": "medium.com/@lbroudoux",
+                      "location": "Le Mans, France",
+                      "email": null,
+                      "hireable": true,
+                      "bio": "Coding architect, geek, committed to open source, @MicrocksIO founder, Postmanaut, ex-Googler, ex-Red Hatter. #api, #distributed, #kubernetes, #cloud, #java",
+                      "twitter_username": "lbroudoux",
+                      "public_repos": 103,
+                      "public_gists": 30,
+                      "followers": 145,
+                      "following": 12,
+                      "created_at": "2012-03-15T01:04:28Z",
+                      "updated_at": "2024-04-21T07:44:59Z",
+                      "private_gists": 3,
+                      "total_private_repos": 7,
+                      "owned_private_repos": 6,
+                      "disk_usage": 357063,
+                      "collaborators": 1,
+                      "two_factor_authentication": true,
+                      "plan": {
+                        "name": "free",
+                        "space": 976562499,
+                        "collaborators": 0,
+                        "private_repos": 10000
+                      }
+                    }
+  /user/emails:
+    get:
+      x-microcks-operation:
+        # https://microcks.io/documentation/using/advanced/dispatching/#script-dispatcher
+        dispatcher: SCRIPT
+        dispatcherRules: |-
+          def headers = mockRequest.getRequestHeaders()
+          def token = headers.get("Authorization", "octocat")
+          switch(token){
+            case ~/Bearer lbroudoux/: 
+              return "lbroudoux"
+            default:
+              return "octocat"
+          }
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                octocat:
+                  value:
+                    - email: octocat@github.com
+                      verified: true
+                      primary: true 
+                      visibility: public
+                lbroudoux:
+                  value: |-
+                    [
+                      {
+                        "email": "laurent.broudoux@gmail.com",
+                        "primary": true,
+                        "verified": true,
+                        "visibility": "public"
+                      },
+                      {
+                        "email": "laurent@microcks.io",
+                        "primary": false,
+                        "verified": true,
+                        "visibility": null
+                      }
+                    ]
+
