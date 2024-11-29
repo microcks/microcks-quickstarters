@@ -20,6 +20,23 @@ It will then automatically target the same server for all other OIDC endpoints.
 The OIDC client will trust any JWT signed with the [known private key](./privateKey.pem) matching the public key returned by the mock.
 This can be used to generate JWT tokens with expected claims, and which will never expire, for instance using https://jwt.io/.
 
+### Authorization (/authorize)
+
+The Authorize endpoint is used to implement SSO from other WebUIs.
+We can for instance use it from a Swagger UI, to get a Bearer access token to test our APIs.
+
+In the example metadata, we answer an HTTP 302 Redirect to the provided redirect_uri, with a token_type=Bearer and an access_token value which is based on:
+
+* the client_id parameter, to select a pre-built token (alice, bob, admin)
+* or default to using the value of client_id as the access token itself.
+
+Tokens need to be signed using the [private key](./privateKey.jwk), and can be generated using https://jwt.io/, with:
+
+* "iss" claim set to "microcks", i.e. matching the issue field returned by the discovery endpoint
+* "aud" claim set to the client_id of the service the token will be used to authenticate with
+* "exp" claim set far in the future, to avoid token expiration issues
+* Any other claim that the service expects, such as "sub", "scopes", etc.
+
 ### Token introspection (/tokeninfo)
 
 If the token is opaque, the OIDC client needs to validate it via the introspection endpoint.
