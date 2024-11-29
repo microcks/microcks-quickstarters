@@ -20,6 +20,55 @@ paths:
                       "n":"iJw33l1eVAsGoRlSyo-FCimeOc-AaZbzQ2iESA3Nkuo3TFb1zIkmt0kzlnWVGt48dkaIl13Vdefh9hqw_r9yNF8xZqX1fp0PnCWc5M_TX_ht5fm9y0TpbiVmsjeRMWZn4jr3DsFouxQ9aBXUJiu26V0vd2vrECeeAreFT4mtoHY13D2WVeJvboc5mEJcp50JNhxRCJ5UkY8jR_wfUk2Tzz4-fAj5xQaBccXnqJMu_1C6MjoCEiB7G1d13bVPReIeAGRKVJIF6ogoCN8JbrOhc_48lT4uyjbgnd24beatuKWodmWYhactFobRGYo5551cgMe8BoxpVQ4to30cGA0qjQ",
                       "e":"AQAB"
                     }]}
+  /authorize:
+    get:
+      x-microcks-operation:
+        dispatcher: FALLBACK
+        dispatcherRules: |-
+          {
+            "dispatcher": "URI_PARAMS",
+            "dispatcherRules": "client_id",
+            "fallback": "case_default"
+          }
+      parameters:
+        # Demo of using the client_id field from a Swagger UI to select the user, or to pass the token
+        - name: client_id
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            case_alice:
+              value: alice
+            case_bob:
+              value: bob
+            case_admin:
+              value: admin
+      responses:
+        "302":
+          headers:
+            Location:
+              examples:
+                case_alice:
+                  value: "{{ request.params[redirect_uri] }}?state={{ request.params[state] }}&token_type=Bearer&access_token=eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhbGljZSIsInVzZXJuYW1lIjoiamRvZSIsImF1ZCI6Im15YXBwIiwiZ3JvdXBzIjpbInVzZXIiXSwiaXNzIjoibWljcm9ja3MiLCJleHAiOjIwNDc1NjgwMDUsImlhdCI6MTczMjAzMTYwNSwianRpIjoiNTFmOTMzYjktZjUwOC00YzQ3LTkwZGEtNmY5ODU1YTBkNDMzIn0.PVAUW1U2RadToh-QWPbcCuhJhSLhu_B5ID72-DgGZXMWd_Z_pWpQ7uvl1iLXtgv5-Nz3yakw_iv-uC2wj6Ls821lwTA0ncbVh3ix5fV0vLmx9EQWiSPbTv3qBG2VJsSbS_6uKolcHnnQrOEsjSDBACKmzs3bsgTqmW7eDdibHYEu-IYzxJQSOelA0K2yzmzxODMlTSfIU0K1W-D9_SkVlVxE5tHf2IjT7fErblDgIcte5eTI1VsOxWYx4epfNp_iznpyKvtrSvBD_YLRFHjpXPuFF_p33vs-zd3xJimE-4_0U2rMLgtWKEiAHcYi98KxWlM8PHDhEbnwOYvmXr__vw"
+                case_bob:
+                  value: "{{ request.params[redirect_uri] }}?state={{ request.params[state] }}&token_type=Bearer&access_token=eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJib2IiLCJ1c2VybmFtZSI6Impkb2UiLCJhdWQiOiJteWFwcCIsImdyb3VwcyI6WyJhcHBAcGVybWlzc2lvbiJdLCJpc3MiOiJtaWNyb2NrcyIsImV4cCI6MjA0NzU2ODAwNSwiaWF0IjoxNzMyMDMxNjA1LCJqdGkiOiI1MWY5MzNiOS1mNTA4LTRjNDctOTBkYS02Zjk4NTVhMGQ0MzMifQ.ajEnt_UTNkz6OpCITnlEd9ij7aivGSwtim47qOUzNxSjkFMcP9U-5sdOTnmJZlwQZSM48iDBay4VNjJobOgrOFYbfbAS-hkGxzTFzSXzCB817X2VsF71nZrwhR-MmdyB4ZEdvWqGZL6hD-gUMh_Ru9aWezV2xSNq_cqsmFCbC-fZndFFpYfVw-EB7FrvulWf9ITzl2PGp4dJGGkYh137eySmLEbnDmJjlCaxWim6WmmQf2Q2m-w366_ZCMEljR_EgAhm1sKnhsZAbl5ZrGEEaxzILA91DV7w6DHJNgDnSNYx3OP-KZH-Z-Xe2pHYFL5FAFAkN3oGZKAH5XIYdlXGbA"
+                case_admin:
+                  value: "{{ request.params[redirect_uri] }}?state={{ request.params[state] }}&token_type=Bearer&access_token=eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbiIsImF1ZCI6Im15YXBwIiwiZ3JvdXBzIjpbInVzZXIiLCJhZG1pbiJdLCJpc3MiOiJtaWNyb2NrcyIsImV4cCI6MjA0NzU2ODAwNSwiaWF0IjoxNzMyMDMxNjA1LCJqdGkiOiI2YjkzMGEwMi01ZDM3LTRkYzYtOTNlZC1jMzM0NGYyZjI0MGEifQ.YVWe2ANIXMp5Nt66BG3d4Zg8Wdjxo4Zhb_lgaaNHDiJyUbF5UUBN47tuOoPklK_hATZ_RL21Vq_fBUKWvjwV3z4JoZN8FMHQjaQ8iie9rF1Z-5Fn8JQzPEFaVRPkZOhaR3B1MH8Tl_v3oY4GGhzRAPgeDRPKzfTDmm7ztPoTCflSveDMAOy7OqZOV89S8GP394VqjymQ_Mi3lA_mgfY5BfbIBTfMhzlpR1_FlbCkynXW_imhZeR3H0gxBLQzMRDzYgQKEzKY-029j2axH_JeIzoMC77XrQZZrcoRyIyHZRfy028CN4KXaumpH5FEEJOSNrWwzwP3zM1IZeHdapiFxg"
+                case_default:
+                  # Use the client_id as the access_token
+                  value: "{{ request.params[redirect_uri] }}?state={{ request.params[state] }}&token_type=Bearer&access_token={{ request.params[client_id] }}"
+          content:
+            application/text:
+              examples:
+                case_alice:
+                  value: "OK"
+                case_bob:
+                  value: "OK"
+                case_admin:
+                  value: "OK"
+                case_default:
+                  value: "OK"
   /token:
     post:
       responses:
