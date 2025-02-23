@@ -60,6 +60,99 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JWKSetResponse'
+  /authorize:
+    get:
+      tags:
+        - OpenID Connect
+      summary: "Authorize users"
+      description: "An Authentication Request is an OAuth 2.0 Authorization Request that requests that the End-User be authenticated by the Authorization Server."
+      parameters:
+        - name: scope
+          in: query
+          description: "OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. Scope values used that are not understood by an implementation SHOULD be ignored"
+          required: true
+          schema:
+            type: string
+        - name: response_type
+          in: query
+          description: "OAuth 2.0 Response Type value that determines the authorization processing flow to be used, including what parameters are returned from the endpoints used. When using the Authorization Code Flow, this value is code."
+          required: true
+          schema:
+            type: string
+        - name: client_id
+          in: query
+          description: "OAuth 2.0 Client Identifier valid at the Authorization Server."
+          required: true
+          schema:
+            type: string
+        - name: redirect_uri
+          in: query
+          description: "Redirection URI to which the response will be sent. This URI MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider. When using this flow, the Redirection URI SHOULD use the https scheme; however, it MAY use the http scheme, provided that the Client Type is confidential, as defined in Section 2.1 of OAuth 2.0, and provided the OP allows the use of http Redirection URIs in this case. Also, if the Client is a native application, it MAY use the http scheme with localhost or the IP loopback literals 127.0.0.1 or [::1] as the hostname. The Redirection URI MAY use an alternate scheme, such as one that is intended to identify a callback into a native application."
+          required: true
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: "Opaque value used to maintain state between the request and the callback. Typically, Cross-Site Request Forgery (CSRF, XSRF) mitigation is done by cryptographically binding the value of this parameter with a browser cookie."
+          required: false
+          schema:
+            type: string
+        - name: response_mode
+          in: query
+          description: "Informs the Authorization Server of the mechanism to be used for returning parameters from the Authorization Endpoint. This use of this parameter is NOT RECOMMENDED when the Response Mode that would be requested is the default mode specified for the Response Type."
+          required: false
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirect
+          content: { }
+    post:
+      tags:
+        - OpenID Connect
+      summary: "Authorize users"
+      description: "An Authentication Request is an OAuth 2.0 Authorization Request that requests that the End-User be authenticated by the Authorization Server."
+      parameters:
+        - name: scope
+          in: query
+          description: "OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. Scope values used that are not understood by an implementation SHOULD be ignored"
+          required: true
+          schema:
+            type: string
+        - name: response_type
+          in: query
+          description: "OAuth 2.0 Response Type value that determines the authorization processing flow to be used, including what parameters are returned from the endpoints used. When using the Authorization Code Flow, this value is code."
+          required: true
+          schema:
+            type: string
+        - name: client_id
+          in: query
+          description: "OAuth 2.0 Client Identifier valid at the Authorization Server."
+          required: true
+          schema:
+            type: string
+        - name: redirect_uri
+          in: query
+          description: "Redirection URI to which the response will be sent. This URI MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider. When using this flow, the Redirection URI SHOULD use the https scheme; however, it MAY use the http scheme, provided that the Client Type is confidential, as defined in Section 2.1 of OAuth 2.0, and provided the OP allows the use of http Redirection URIs in this case. Also, if the Client is a native application, it MAY use the http scheme with localhost or the IP loopback literals 127.0.0.1 or [::1] as the hostname. The Redirection URI MAY use an alternate scheme, such as one that is intended to identify a callback into a native application."
+          required: true
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: "Opaque value used to maintain state between the request and the callback. Typically, Cross-Site Request Forgery (CSRF, XSRF) mitigation is done by cryptographically binding the value of this parameter with a browser cookie."
+          required: false
+          schema:
+            type: string
+        - name: response_mode
+          in: query
+          description: "Informs the Authorization Server of the mechanism to be used for returning parameters from the Authorization Endpoint. This use of this parameter is NOT RECOMMENDED when the Response Mode that would be requested is the default mode specified for the Response Type."
+          required: false
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirect
+          content: { }
   /userinfo:
     get:
       tags:
