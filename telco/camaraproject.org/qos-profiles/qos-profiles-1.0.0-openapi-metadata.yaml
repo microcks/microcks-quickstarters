@@ -1,0 +1,620 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: QoS Profiles
+  version: 1.0.0
+operations:
+  GET /qos-profiles/{name}:
+    Real-time Interactive QoS Profile for Gaming:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          name: real-time-interactive
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "name" : "real-time-interactive",
+            "description" : "QoS profile optimized for real-time interactive gaming applications.",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 100,
+              "unit" : "Mbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 1000,
+              "unit" : "Mbps"
+            },
+            "maxUpstreamBurstRate" : {
+              "value" : 150,
+              "unit" : "Mbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 500,
+              "unit" : "Mbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 1000,
+              "unit" : "Mbps"
+            },
+            "maxDownstreamBurstRate" : {
+              "value" : 150,
+              "unit" : "Mbps"
+            },
+            "minDuration" : {
+              "value" : 5,
+              "unit" : "Minutes"
+            },
+            "maxDuration" : {
+              "value" : 60,
+              "unit" : "Minutes"
+            },
+            "priority" : 10,
+            "packetDelayBudget" : {
+              "value" : 10,
+              "unit" : "Milliseconds"
+            },
+            "jitter" : {
+              "value" : 5,
+              "unit" : "Milliseconds"
+            },
+            "packetErrorLossRate" : 3,
+            "l4sQueueType" : "mixed-queue",
+            "serviceClass" : "real_time_interactive"
+          }
+    QoS Profile for Video Streaming:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          name: video-streaming
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "name" : "video-streaming",
+            "description" : "QoS profile designed for high-definition video streaming services.",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 50,
+              "unit" : "Mbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 500,
+              "unit" : "Mbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 500,
+              "unit" : "Mbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 1000,
+              "unit" : "Mbps"
+            },
+            "maxDownstreamBurstRate" : {
+              "value" : 200,
+              "unit" : "Mbps"
+            },
+            "minDuration" : {
+              "value" : 10,
+              "unit" : "Minutes"
+            },
+            "maxDuration" : {
+              "value" : 120,
+              "unit" : "Minutes"
+            },
+            "priority" : 20,
+            "packetDelayBudget" : {
+              "value" : 20,
+              "unit" : "Milliseconds"
+            },
+            "jitter" : {
+              "value" : 10,
+              "unit" : "Milliseconds"
+            },
+            "packetErrorLossRate" : 5,
+            "serviceClass" : "multimedia_streaming"
+          }
+    Active Voice QoS Profile:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          name: active-voice
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "name" : "active-voice",
+            "description" : "QoS profile for high-quality voice communications over IP networks.",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 10,
+              "unit" : "Mbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 50,
+              "unit" : "Mbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 50,
+              "unit" : "Mbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 150,
+              "unit" : "Mbps"
+            },
+            "maxDownstreamBurstRate" : {
+              "value" : 50,
+              "unit" : "Mbps"
+            },
+            "minDuration" : {
+              "value" : 1,
+              "unit" : "Minutes"
+            },
+            "maxDuration" : {
+              "value" : 15,
+              "unit" : "Minutes"
+            },
+            "priority" : 5,
+            "packetDelayBudget" : {
+              "value" : 5,
+              "unit" : "Milliseconds"
+            },
+            "jitter" : {
+              "value" : 2,
+              "unit" : "Milliseconds"
+            },
+            "packetErrorLossRate" : 2,
+            "l4sQueueType" : "non-l4s-queue",
+            "serviceClass" : "microsoft_voice"
+          }
+    basic_qos_profile:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          name: QOS_E
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "name" : "QOS_E",
+            "description" : "Low latency, high throughput profile",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 300,
+              "unit" : "Kbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 500,
+              "unit" : "kbps"
+            },
+            "maxUpstreamBurstRate" : {
+              "value" : 600,
+              "unit" : "kbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 1000,
+              "unit" : "kbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 2000,
+              "unit" : "kbps"
+            },
+            "maxDownstreamBurstRate" : {
+              "value" : 2500,
+              "unit" : "kbps"
+            },
+            "minDuration" : {
+              "value" : 15,
+              "unit" : "Minutes"
+            },
+            "maxDuration" : {
+              "value" : 1440,
+              "unit" : "Minutes"
+            },
+            "priority" : 10,
+            "packetDelayBudget" : {
+              "value" : 100,
+              "unit" : "Milliseconds"
+            },
+            "jitter" : {
+              "value" : 10,
+              "unit" : "Milliseconds"
+            },
+            "packetErrorLossRate" : 5,
+            "l4sQueueType" : "l4s-queue",
+            "serviceClass" : "low_latency_data"
+          }
+    qos_profile_invalid_name:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          name: not_a_valid_profile
+      response:
+        headers:
+          content-type: application/json
+        status: 404
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 404,
+            "code" : "NOT_FOUND",
+            "message" : "QoS Profile 'not_a_valid_profile' is not found."
+          }
+    qos_profile_already_deprecated:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          name: QOS_D
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "name" : "QOS_D",
+            "description" : "Premium high-priority profile",
+            "status" : "DEPRECATED",
+            "targetMinUpstreamRate" : {
+              "value" : 300,
+              "unit" : "kbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 500,
+              "unit" : "kbps"
+            },
+            "maxUpstreamBurstRate" : {
+              "value" : 600,
+              "unit" : "kbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 1000,
+              "unit" : "kbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 2000,
+              "unit" : "kbps"
+            },
+            "maxDownstreamBurstRate" : {
+              "value" : 2500,
+              "unit" : "kbps"
+            },
+            "minDuration" : {
+              "value" : 10,
+              "unit" : "Minutes"
+            },
+            "maxDuration" : {
+              "value" : 360,
+              "unit" : "Minutes"
+            },
+            "priority" : 5,
+            "packetDelayBudget" : {
+              "value" : 200,
+              "unit" : "Milliseconds"
+            },
+            "jitter" : {
+              "value" : 15,
+              "unit" : "Milliseconds"
+            },
+            "packetErrorLossRate" : 4,
+            "l4sQueueType" : "mixed-queue",
+            "serviceClass" : "standard"
+          }
+  POST /retrieve-qos-profiles:
+    Regular device request:
+      request:
+        headers:
+          x-correlator: abcd1234
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+123456789"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "name" : "QOS_E",
+            "description" : "Example QoS profile for high priority traffic",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 1000,
+              "unit" : "kbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 2000,
+              "unit" : "kbps"
+            },
+            "maxUpstreamBurstRate" : {
+              "value" : 2500,
+              "unit" : "kbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 5000,
+              "unit" : "kbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 10000,
+              "unit" : "kbps"
+            }
+          } ]
+    Special device request:
+      request:
+        headers:
+          accept: application/json
+          x-correlator: efgh5678
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.168.0.1",
+                "privateAddress" : "10.0.0.1",
+                "publicPort" : 8080
+              },
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "name" : "QOS_S",
+            "description" : "Example QoS profile for standard traffic",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 500,
+              "unit" : "kbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 1000,
+              "unit" : "kbps"
+            },
+            "maxUpstreamBurstRate" : {
+              "value" : 1500,
+              "unit" : "kbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 2500,
+              "unit" : "kbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 5000,
+              "unit" : "kbps"
+            }
+          } ]
+    Authentication required:
+      request:
+        headers:
+          accept: application/json
+          x-correlator: ijkl9012
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+987654321"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 401
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 401,
+            "code" : "AUTHENTICATION_REQUIRED",
+            "message" : "API authentication required to access this resource"
+          }
+    Retrieve QoS Profiles by IPv4 address:
+      request:
+        headers:
+          x-correlator: qwerty123
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.168.0.1",
+                "privateAddress" : "10.0.0.1"
+              },
+              "name" : "QOS_E",
+              "status" : "ACTIVE"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "name" : "QOS_E",
+            "description" : "Description of QoS Profile E",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 500,
+              "unit" : "kbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 1000,
+              "unit" : "kbps"
+            },
+            "maxUpstreamBurstRate" : {
+              "value" : 1500,
+              "unit" : "kbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 250,
+              "unit" : "kbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 512,
+              "unit" : "kbps"
+            },
+            "maxDownstreamBurstRate" : {
+              "value" : 768,
+              "unit" : "kbps"
+            },
+            "minDuration" : {
+              "value" : 2,
+              "unit" : "Hours"
+            },
+            "maxDuration" : {
+              "value" : 24,
+              "unit" : "Hours"
+            },
+            "priority" : 50,
+            "packetDelayBudget" : {
+              "value" : 250,
+              "unit" : "milliseconds"
+            },
+            "jitter" : {
+              "value" : 50,
+              "unit" : "milliseconds"
+            },
+            "packetErrorLossRate" : 3,
+            "l4sQueueType" : "mixed-queue",
+            "serviceClass" : "high-throughput_data"
+          } ]
+    Retrieve QoS Profiles by IPv6 address:
+      request:
+        headers:
+          accept: application/json
+          x-correlator: asdfgh456
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:db8::1",
+              "name" : "QOS_S",
+              "status" : "ACTIVE"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "name" : "QOS_S",
+            "description" : "Description of QoS Profile S",
+            "status" : "ACTIVE",
+            "targetMinUpstreamRate" : {
+              "value" : 256,
+              "unit" : "kbps"
+            },
+            "maxUpstreamRate" : {
+              "value" : 512,
+              "unit" : "kbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 128,
+              "unit" : "kbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 256,
+              "unit" : "kbps"
+            },
+            "minDuration" : {
+              "value" : 4,
+              "unit" : "Hours"
+            },
+            "maxDuration" : {
+              "value" : 48,
+              "unit" : "Hours"
+            },
+            "priority" : 80,
+            "packetDelayBudget" : {
+              "value" : 200,
+              "unit" : "milliseconds"
+            },
+            "jitter" : {
+              "value" : 40,
+              "unit" : "milliseconds"
+            },
+            "packetErrorLossRate" : 2,
+            "l4sQueueType" : "mixed-queue",
+            "serviceClass" : "multimedia_streaming"
+          } ]
+    Retrieve QoS Profiles by phone number:
+      request:
+        headers:
+          x-correlator: zxcvbn789
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+1234567890",
+              "networkAccessIdentifier" : "1234@5678",
+              "name" : "QOS_M",
+              "status" : "ACTIVE"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "name" : "QOS_M",
+            "description" : "Description of QoS Profile M",
+            "status" : "ACTIVE",
+            "maxUpstreamRate" : {
+              "value" : 25,
+              "unit" : "Mbps"
+            },
+            "targetMinDownstreamRate" : {
+              "value" : 50,
+              "unit" : "Mbps"
+            },
+            "maxDownstreamRate" : {
+              "value" : 100,
+              "unit" : "Mbps"
+            },
+            "minDuration" : {
+              "value" : 1,
+              "unit" : "Hour"
+            },
+            "maxDuration" : {
+              "value" : 12,
+              "unit" : "Hours"
+            },
+            "priority" : 25,
+            "packetDelayBudget" : {
+              "value" : 100,
+              "unit" : "milliseconds"
+            },
+            "jitter" : {
+              "value" : 30,
+              "unit" : "milliseconds"
+            },
+            "packetErrorLossRate" : 5,
+            "l4sQueueType" : "l4s-queue",
+            "serviceClass" : "low_latency_data"
+          } ]
