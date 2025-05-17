@@ -1,0 +1,229 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: Device Location Verification
+  version: 2.0.0
+operations:
+  POST /verify:
+    Full verification for a device with a phone number identifier in a circle area:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+1234567890"
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerCoordinates" : {
+                "latitude" : 37.7749,
+                "longitude" : -122.4194
+              },
+              "radius" : 100
+            }
+          }
+      response:
+        status: 200
+    Partial verification with match rate estimation for a device identified by IPv6 address in a circle area:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerCoordinates" : {
+                "latitude" : 40.7128,
+                "longitude" : -74.006
+              },
+              "radius" : 50
+            }
+          }
+      response:
+        status: 200
+    Verification failure for a device identified by public IP address in an area not covered:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.0.2.1"
+              },
+              "privateAddress" : "10.0.0.1"
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerCoordinates" : {
+                "latitude" : 51.5074,
+                "longitude" : 0.1278
+              },
+              "radius" : 20
+            }
+          }
+      response:
+        status: 200
+    Verify device in specific area:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+1234567890"
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerLatitude" : 40.7128,
+              "centerLongitude" : -74.006,
+              "radiusMeters" : 1000
+            },
+            "maxAge" : 3600
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastLocationTime" : "2023-07-03T14:27:08.312+02:00",
+            "verificationResult" : "TRUE"
+          }
+    Verify device in different area:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.168.1.1"
+              }
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerLatitude" : 37.7749,
+              "centerLongitude" : -122.4194,
+              "radiusMeters" : 500
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastLocationTime" : "2023-07-03T14:27:08.312+02:00",
+            "verificationResult" : "FALSE"
+          }
+    Verify device with unknown location:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:db8::1"
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerLatitude" : 45.4215,
+              "centerLongitude" : -75.6972,
+              "radiusMeters" : 200
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastLocationTime" : "UNKNOWN",
+            "verificationResult" : "UNKNOWN"
+          }
+    ValidRequest1:
+      request:
+        headers:
+          x-correlator: example-correlator-1
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+123456789"
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerLatitude" : 37.7749,
+              "centerLongitude" : -122.4194,
+              "radiusMeters" : 500
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastLocationTime" : "2023-07-03T14:27:08.312+02:00",
+            "verificationResult" : true
+          }
+    InvalidRequest1:
+      request:
+        headers:
+          x-correlator: example-correlator-2
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+987654321"
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerLatitude" : 40.7128,
+              "centerLongitude" : -74.006,
+              "radiusMeters" : 200
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 422
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 422,
+            "code" : "LOCATION_VERIFICATION.AREA_NOT_COVERED",
+            "message" : "The requested area is not covered by the network operator."
+          }
+    PartialMatchRequest1:
+      request:
+        headers:
+          accept: application/json
+          x-correlator: example-correlator-3
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.0.2.1",
+                "privateAddress" : "10.0.0.1"
+              },
+              "ipv4Port" : 8080
+            },
+            "area" : {
+              "areaType" : "CIRCLE",
+              "centerLatitude" : 48.8566,
+              "centerLongitude" : 2.3522,
+              "radiusMeters" : 1000
+            }
+          }
+      response:
+        status: 200

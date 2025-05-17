@@ -1,0 +1,182 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: Device Reachability Status
+  version: 1.0.0
+operations:
+  POST /retrieve:
+    Single IPv4 address:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.168.1.1",
+                "privateAddress" : "192.168.1.1"
+              },
+              "phoneNumber" : "+123456789"
+            }
+          }
+      response:
+        status: 200
+    Unique IPv6 address:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          }
+      response:
+        status: 200
+    Multiple identifiers:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+              "phoneNumber" : "+987654321"
+            }
+          }
+      response:
+        status: 200
+    Retrieve device reachability status - Example 1:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+123456789"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2023-01-30T16:59:58Z",
+            "reachable" : true,
+            "connectivity" : [ "DATA" ]
+          }
+    Retrieve device reachability status - Example 2:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.0.2.1",
+                "privateAddress" : "192.168.1.1",
+                "publicPort" : 8080
+              }
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2023-01-30T16:59:58Z",
+            "reachable" : false,
+            "connectivity" : [ "SMS" ]
+          }
+    Retrieve device reachability status - Example 3:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "networkAccessIdentifier" : "ABCD1234@operator"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2023-01-30T16:59:58Z",
+            "reachable" : true,
+            "connectivity" : [ "DATA", "SMS" ]
+          }
+    example 1:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+123456789"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-01-01T12:00:00Z",
+            "reachable" : true,
+            "connectivity" : [ "DATA" ]
+          }
+    example 2:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.168.1.10",
+                "privateAddress" : "10.0.0.1",
+                "publicPort" : 8080
+              }
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-01-02T08:30:00Z",
+            "reachable" : false,
+            "connectivity" : [ "SMS" ]
+          }
+    example 3:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-01-03T16:45:00Z",
+            "reachable" : true,
+            "connectivity" : [ "DATA" ]
+          }

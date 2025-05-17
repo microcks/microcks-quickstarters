@@ -1,0 +1,208 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: Device Roaming Status
+  version: 1.0.0
+operations:
+  POST /retrieve:
+    Single Identifier:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+1234567890"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-11-02T14:30:00Z",
+            "roaming" : true,
+            "countryCode" : 123,
+            "countryName" : [ "USA", "Canada" ]
+          }
+    Multiple Identifiers:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+1234567890",
+              "networkAccessIdentifier" : "example123",
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-10-06T10:25:00Z",
+            "roaming" : false
+          }
+    IPv4 Address Information:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.0.2.1",
+                "privateAddress" : "10.0.0.1"
+              }
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-10-20T08:15:00Z",
+            "roaming" : false
+          }
+    RoamingStatusRequest1:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+1234567890"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2023-12-21T10:15:30Z",
+            "roaming" : true,
+            "countryCode" : 302,
+            "countryName" : [ "US", "Canada" ]
+          }
+    RoamingStatusRequest2:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.168.1.2"
+              }
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2023-12-21T10:15:30Z",
+            "roaming" : false
+          }
+    RoamingStatusRequest3:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 422
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 422,
+            "code" : "ID_UNAVAILABLE",
+            "message" : "Identifier not found for the specified device"
+          }
+    Roaming status retrieval Example 1:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.168.1.10",
+                "privateAddress" : "192.168.1.20",
+                "publicPort" : 8080
+              }
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-01-01T08:00:00Z",
+            "roaming" : true,
+            "countryCode" : 123,
+            "countryName" : [ "Country1", "Country2" ]
+          }
+    Roaming status retrieval Example 2:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "phoneNumber" : "+15555555555",
+              "networkAccessIdentifier" : "ABC123"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-01-01T08:30:00Z",
+            "roaming" : false
+          }
+    Roaming status retrieval Example 3:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "device" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "lastStatusTime" : "2022-01-01T09:00:00Z",
+            "roaming" : true,
+            "countryCode" : 456,
+            "countryName" : [ "AnotherCountry1" ]
+          }

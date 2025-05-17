@@ -1,0 +1,374 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: Quality-On-Demand
+  version: wip
+operations:
+  POST /sessions/{sessionId}/extend:
+    Session extension for gaming:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: 4f2c1843-1111-2222-3333-8bc29e2b5c43
+        body: "{\"requestedAdditionalDuration\": 600}"
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "{\"sessionId\":\"4f2c1843-1111-2222-3333-8bc29e2b5c43\",\"duration\"\
+          :36600,\"startedAt\":\"2023-01-15T10:00:00Z\",\"expiresAt\":\"2023-01-15T20:10:00Z\"\
+          ,\"qosStatus\":\"AVAILABLE\"}"
+    Extending remote work session:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: a987b654-1111-2222-3333-20d1602f9a60
+        body: "{\"requestedAdditionalDuration\": 1200}"
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "{\"sessionId\":\"a987b654-1111-2222-3333-20d1602f9a60\",\"duration\"\
+          :37200,\"startedAt\":\"2023-03-10T08:00:00Z\",\"expiresAt\":\"2023-03-10T18:20:00Z\"\
+          ,\"qosStatus\":\"AVAILABLE\"}"
+    Extending lecture streaming session:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: 123e4567-1111-2222-3333-e89b12d3f4b6
+        body: "{\"requestedAdditionalDuration\": 1800}"
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "{\"sessionId\":\"123e4567-1111-2222-3333-e89b12d3f4b6\",\"duration\"\
+          :45000,\"startedAt\":\"2023-05-20T09:00:00Z\",\"expiresAt\":\"2023-05-20T21:30:00Z\"\
+          ,\"qosStatus\":\"AVAILABLE\"}"
+  GET /sessions/{sessionId}:
+    Session Information Request for Gaming App:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: 12f87b48-6479-4fe9-901a-7c67f0491a87
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "sessionId" : "12f87b48-6479-4fe9-901a-7c67f0491a87",
+            "duration" : 3600,
+            "startedAt" : "2023-09-21T10:00:00Z",
+            "expiresAt" : "2023-09-21T11:00:00Z",
+            "qosStatus" : "AVAILABLE",
+            "device" : {
+              "ipv4Address" : {
+                "publicAddress" : "192.0.2.1",
+                "privateAddress" : "198.51.100.1"
+              }
+            },
+            "applicationServer" : {
+              "ipv4Address" : "203.0.113.5"
+            },
+            "qosProfile" : "QOS_E"
+          }
+    Session Detail for IoT Device:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: e3a9e464-8b2e-4237-b2c2-edf7b64a7a63
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "sessionId" : "e3a9e464-8b2e-4237-b2c2-edf7b64a7a63",
+            "duration" : 7200,
+            "startedAt" : "2023-09-22T15:00:00Z",
+            "expiresAt" : "2023-09-22T17:00:00Z",
+            "qosStatus" : "AVAILABLE",
+            "device" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            },
+            "applicationServer" : {
+              "ipv6Address" : "2001:0db8:85a3:0000:0000:abcd:0370:7334"
+            },
+            "qosProfile" : "QOS_S"
+          }
+    Expired Session Query:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: 99887766-55cc-4477-aa88-99ccbb447766
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "sessionId" : "99887766-55cc-4477-aa88-99ccbb447766",
+            "duration" : 1800,
+            "startedAt" : "2023-08-15T09:30:00Z",
+            "expiresAt" : "2023-08-15T10:00:00Z",
+            "qosStatus" : "UNAVAILABLE",
+            "statusInfo" : "DURATION_EXPIRED",
+            "device" : {
+              "phoneNumber" : "+12345678901"
+            },
+            "applicationServer" : {
+              "ipv4Address" : "198.51.100.55"
+            },
+            "qosProfile" : "QOS_L"
+          }
+  POST /sessions:
+    Creating a session for gaming app:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "device": {
+              "ipv4Address": {
+                "publicAddress": "203.0.113.5",
+                "publicPort": 8080
+              }
+            },
+            "applicationServer": {
+              "ipv4Address": "198.51.100.14/32"
+            },
+            "qosProfile": "QOS_GAMING_HIGH",
+            "duration": 7200
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 201
+        mediaType: application/json
+        body: |
+          {
+            "sessionId": "2f5ae96c-db82-46ed-8b8e-d3c8cbf9b608",
+            "duration": 7200,
+            "qosStatus": "REQUESTED",
+            "applicationServer": {
+              "ipv4Address": "198.51.100.14/32"
+            }
+          }
+    Creating a session for video conferencing:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "device": {
+              "ipv4Address": {
+                "publicAddress": "203.0.113.7",
+                "privateAddress": "192.168.1.101"
+              }
+            },
+            "applicationServer": {
+              "ipv4Address": "203.0.113.8/32"
+            },
+            "qosProfile": "QOS_VIDEO_CONF",
+            "duration": 3600,
+            "sink": "https://yourcallbackurl.example.com/notifications"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 201
+        mediaType: application/json
+        body: |
+          {
+            "sessionId": "5df8b6de-abf3-4b03-bd4b-f7e2f8c578b9",
+            "duration": 3600,
+            "qosStatus": "AVAILABLE",
+            "applicationServer": {
+              "ipv4Address": "203.0.113.8/32"
+            },
+            "startedAt": "2023-03-16T10:00:00Z",
+            "expiresAt": "2023-03-16T11:00:00Z"
+          }
+    Creating a session for IoT device data upload:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "device": {
+              "ipv6Address": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            },
+            "applicationServer": {
+              "ipv6Address": "2001:0db8:85a3:0000:0000:8a3b:0371:7335/64"
+            },
+            "qosProfile": "QOS_IOT_LOW_LATENCY",
+            "duration": 300,
+            "sink": "https://yourcallbackurl.example.com/iot-notifications",
+            "sinkCredential": {
+              "credentialType": "ACCESSTOKEN",
+              "credentialValue": "token123456789"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 201
+        mediaType: application/json
+        body: |
+          {
+            "sessionId": "8fbdd4a1-4140-4c1e-bf67-877afc2a9d09",
+            "duration": 300,
+            "qosStatus": "REQUESTED",
+            "applicationServer": {
+              "ipv6Address": "2001:0db8:85a3:0000:0000:8a3b:0371:7335/64"
+            }
+          }
+  POST /retrieve-sessions:
+    Retrieve sessions for a device with IPv4:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "device": {
+              "ipv4Address": {
+                "publicAddress": "192.0.2.1",
+                "privateAddress": "10.0.0.1"
+              }
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |
+          [
+            {
+              "sessionId": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
+              "applicationServer": {
+                "ipv4Address": "203.0.113.1"
+              },
+              "qosProfile": "QOS_E",
+              "qosStatus": "AVAILABLE",
+              "duration": 3600,
+              "startedAt": "2023-01-01T12:00:00Z",
+              "expiresAt": "2023-01-01T13:00:00Z"
+            }
+          ]
+    Retrieve sessions for a device with IPv6:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "device": {
+              "ipv6Address": "2001:db8::1"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |
+          [
+            {
+              "sessionId": "e4e4b37e-8c70-11eb-8dcd-0242ac130003",
+              "applicationServer": {
+                "ipv6Address": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+              },
+              "qosProfile": "QOS_S",
+              "qosStatus": "AVAILABLE",
+              "duration": 7200,
+              "startedAt": "2023-02-01T14:00:00Z",
+              "expiresAt": "2023-02-01T16:00:00Z"
+            }
+          ]
+    Retrieve sessions for a device with phone number:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "device": {
+              "phoneNumber": "+1234567890"
+            }
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |
+          [
+            {
+              "sessionId": "a3f1a346-71e2-11ec-90d6-0242ac120003",
+              "applicationServer": {
+                "ipv4Address": "198.51.100.2"
+              },
+              "qosProfile": "QOS_M",
+              "qosStatus": "AVAILABLE",
+              "duration": 1800,
+              "startedAt": "2023-03-01T09:00:00Z",
+              "expiresAt": "2023-03-01T09:30:00Z"
+            }
+          ]
+  DELETE /sessions/{sessionId}:
+    Successfully Deleted QoS Session:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: 123e4567-e89b-12d3-a456-426655440000
+      response:
+        headers:
+          content-type: application/json
+        status: 204
+        mediaType: application/json
+    QoS Session Not Found:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: 987e6543-e21c-12d3-a456-426655440000
+      response:
+        headers:
+          content-type: application/json
+        status: 404
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 404,
+            "code" : "NOT_FOUND",
+            "message" : "Session ID does not exist."
+          }
+    Unauthorized Access to Delete QoS Session:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          sessionId: bc9e457b-a813-49b6-8d25-35f7d5b76bac
+      response:
+        headers:
+          content-type: application/json
+        status: 401
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 401,
+            "code" : "UNAUTHENTICATED",
+            "message" : "You must authenticate to access this resource."
+          }
