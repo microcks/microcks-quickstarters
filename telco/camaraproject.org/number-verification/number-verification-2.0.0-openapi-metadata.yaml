@@ -1,0 +1,277 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: Number Verification
+  version: 2.0.0
+operations:
+  POST /verify:
+    phoneNumber-verify-1:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "hashedPhoneNumber" : "61c8ff3ad7a5e6dc885545a20ef8875a"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumberVerified" : true
+          }
+    phoneNumber-verify-2:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "hashedPhoneNumber" : "921fc3a855bb5fa912562819e440f908"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumberVerified" : false
+          }
+    phoneNumber-verify-3:
+      request:
+        headers:
+          accept: application/json
+        body: |-
+          {
+            "hashedPhoneNumber" : "cfb686bd57d818f8102d8f5d16f8518c"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumberVerified" : true
+          }
+    Realistic Example 1:
+      request:
+        headers:
+          accept: application/json
+          x-correlator: EXAMPLE12345
+        body: |-
+          {
+            "phoneNumber" : "+1234567890"
+          }
+      response:
+        status: 200
+    Realistic Example 2:
+      request:
+        headers:
+          accept: application/json
+          x-correlator: EXAMPLE54321
+        body: |-
+          {
+            "hashedPhoneNumber" : "+1234567890"
+          }
+      response:
+        status: 200
+    Realistic Example 3:
+      request:
+        headers:
+          accept: application/json
+          x-correlator: EXAMPLE98765
+        body: |-
+          {
+            "phoneNumber" : "+1987654321"
+          }
+      response:
+        status: 200
+    valid hash:
+      request:
+        headers:
+          x-correlator: abc123
+          accept: application/json
+        body: |-
+          {
+            "phoneNumber" : "+1234567890",
+            "hashedPhoneNumber" : "246a6eb3238d5f9f47229669496b3892c08cd83127fd3445ff4e4f6ef7d5685a"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumberVerified" : true
+          }
+    valid plain text:
+      request:
+        headers:
+          x-correlator: xyz987
+          accept: application/json
+        body: |-
+          {
+            "phoneNumber" : "+1234567890"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumberVerified" : false
+          }
+    invalid hash:
+      request:
+        headers:
+          x-correlator: def456
+          accept: application/json
+        body: |-
+          {
+            "phoneNumber" : "+1987654321",
+            "hashedPhoneNumber" : "invalidhashednum"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumberVerified" : false
+          }
+  GET /device-phone-number:
+    valid_device_phone_number:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumber" : "+12345678901"
+          }
+    missing_correlator_header:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 400
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 400,
+            "code" : "INVALID_ARGUMENT",
+            "message" : "Correlator header missing or invalid"
+          }
+    unauthorized_access:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 401
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 401,
+            "code" : "UNAUTHENTICATED",
+            "message" : "Authentication required to access the resource"
+          }
+    Example of successful retrieval:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumber" : "+15555555555"
+          }
+    Example of client request problem:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 400
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 400,
+            "code" : "INVALID_ARGUMENT",
+            "message" : "Request parameters are invalid"
+          }
+    Example of unauthorized access:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 401
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 401,
+            "code" : "UNAUTHENTICATED",
+            "message" : "Authentication required to access the resource"
+          }
+    example 1:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          {
+            "devicePhoneNumber" : "+123456789012"
+          }
+    example 2:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 400
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 400,
+            "code" : "INVALID_ARGUMENT",
+            "message" : "One or more request parameters are invalid."
+          }
+    example 3:
+      request:
+        headers:
+          accept: application/json
+      response:
+        headers:
+          content-type: application/json
+        status: 401
+        mediaType: application/json
+        body: |-
+          {
+            "status" : 401,
+            "code" : "UNAUTHENTICATED",
+            "message" : "User is unauthorized to access the device phone number."
+          }

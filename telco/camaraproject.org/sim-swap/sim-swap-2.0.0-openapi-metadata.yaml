@@ -1,0 +1,238 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: SIM Swap
+  version: 1.0.0
+operations:
+  'POST /retrieve-date':
+    "+937018305578":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+937018305578"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-07-03T14:27:08.312+02:00"
+    "+2449238626609":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+2449238626609"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-08-03T14:27:08.312+02:00"
+    "+2449235141894":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+2449235141894"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-09-03T14:27:08.312+02:00"
+    "+614129559000":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+614129559000"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-10-03T14:27:08.312+02:00"
+    "+8801817421995":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+8801817421995"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-11-03T14:27:08.312+02:00"
+    "+324701053815":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+324701053815"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-12-03T14:27:08.312+02:00"
+    "+324703318377":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+324703318377"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-01-03T14:27:08.312+02:00"
+    "+551112345678":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+551112345678"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-02-03T14:27:08.312+02:00"
+    "+6737124000017":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+6737124000017"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-03-03T14:27:08.312+02:00"
+    "+61212345678":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+61212345678"
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          latestSimChange: "2023-04-03T14:27:08.312+02:00"
+  'POST /check':
+    "+937018305578":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+937018305578"
+          maxAge: 240
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: true
+    "+2449238626609":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+2449238626609"
+          maxAge: 480
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: false
+    "+2449235141894":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+2449235141894"
+          maxAge: 360
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: true
+    "+614129559000":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+614129559000"
+          maxAge: 600
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: false
+    "+8801817421995":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+8801817421995"
+          maxAge: 720
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: true
+    "+324701053815":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+324701053815"
+          maxAge: 840
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: false
+    "+324703318377":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+324703318377"
+          maxAge: 960
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: true
+    "+551112345678":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+551112345678"
+          maxAge: 1080
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: false
+    "+6737124000017":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+6737124000017"
+          maxAge: 1200
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: true
+    "+61212345678":
+      request:
+        headers:
+          accept: application/json
+        body:
+          phoneNumber: "+61212345678"
+          maxAge: 1320
+      response:
+        mediaType: application/json
+        status: "200"
+        body:
+          swapped: false

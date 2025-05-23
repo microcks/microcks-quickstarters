@@ -1,0 +1,67 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: Know Your Customer Match
+  version: 0.3.0
+operations:
+  POST /match:
+    Successful match with name and birthdate:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "phoneNumber": "+12016219813",
+            "name": "John Doe",
+            "birthdate": "1985-02-08"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |
+          {
+            "nameMatch": "true",
+            "birthdateMatch": "true"
+          }
+    Partial match with email and mismatch on gender:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "phoneNumber": "+447405580375",
+            "email": "johndoe@example.com",
+            "gender": "MALE"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |
+          {
+            "emailMatch": "true",
+            "genderMatch": "false"
+          }
+    Failed match due to ID document mismatch:
+      request:
+        headers:
+          accept: application/json
+        body: |
+          {
+            "phoneNumber": "+937018460616",
+            "idDocument": "AB1234567"
+          }
+      response:
+        headers:
+          content-type: application/json
+        status: 403
+        mediaType: application/json
+        body: |
+          {
+            "status": 403,
+            "code": "KNOW_YOUR_CUSTOMER.ID_DOCUMENT_MISMATCH",
+            "message": "The provided ID document does not match our records."
+          }

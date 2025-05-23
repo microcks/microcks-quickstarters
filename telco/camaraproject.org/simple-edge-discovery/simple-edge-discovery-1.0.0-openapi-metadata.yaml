@@ -1,0 +1,150 @@
+apiVersion: mocks.microcks.io/v1alpha1
+kind: APIExamples
+metadata:
+  name: Simple Edge Discovery
+  version: 1.0.0
+operations:
+  GET /edge-cloud-zones:
+    Device with IPv4-Address:
+      request:
+        headers:
+          accept: application/json
+          IPv4-Address: 84.125.93.10
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "[{\"edgeCloudZoneId\":\"4gt555-6457-7890-d4he-1dc79f44gb66\",\"edgeCloudZoneName\"\
+          :\"example zone name\",\"edgeCloudProvider\":\"example zone provider\"}]"
+    Device with IPv6-Address:
+      request:
+        headers:
+          IPv6-Address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+          accept: application/json
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "[{\"edgeCloudZoneId\":\"4gt555-6457-7890-d4he-1dc79f44gb66\",\"edgeCloudZoneName\"\
+          :\"example zone name\",\"edgeCloudProvider\":\"example zone provider\"}]"
+    Device with Phone-Number:
+      request:
+        headers:
+          accept: application/json
+          Phone-Number: +441234567890
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "[{\"edgeCloudZoneId\":\"4gt555-6457-7890-d4he-1dc79f44gb66\",\"edgeCloudZoneName\"\
+          :\"example zone name\",\"edgeCloudProvider\":\"example zone provider\"}]"
+    Edge Cloud Zone from IPv4-Address:
+      request:
+        headers:
+          accept: application/json
+          IPv4-Address: 84.125.93.10
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "edgeCloudZoneId" : "4gt555-6457-7890-d4he-1dc79f44gb66",
+            "edgeCloudZoneName" : "example zone name",
+            "edgeCloudProvider" : "example zone provider"
+          } ]
+    Edge Cloud Zone from IPv6-Address:
+      request:
+        headers:
+          IPv6-Address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+          accept: application/json
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "edgeCloudZoneId" : "4gt555-6457-7890-d4he-1dc79f44gb66",
+            "edgeCloudZoneName" : "example zone name",
+            "edgeCloudProvider" : "example zone provider"
+          } ]
+    Edge Cloud Zone from Phone-Number:
+      request:
+        headers:
+          accept: application/json
+          Phone-Number: 441234567890
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: |-
+          [ {
+            "edgeCloudZoneId" : "4gt555-6457-7890-d4he-1dc79f44gb66",
+            "edgeCloudZoneName" : "example zone name",
+            "edgeCloudProvider" : "example zone provider"
+          } ]
+    Request with IPv4 Address:
+      request:
+        headers:
+          IPv4-Address: 84.125.93.10
+          accept: application/json
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "[{\"edgeCloudZoneId\": \"4gt555-6457-7890-d4he-1dc79f44gb66\", \"edgeCloudZoneName\"\
+          : \"example zone name\", \"edgeCloudProvider\": \"example zone provider\"\
+          }]"
+    Request with Phone Number:
+      request:
+        headers:
+          Phone-Number: 441234567890
+          accept: application/json
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 200
+        mediaType: application/json
+        body: "[{\"edgeCloudZoneId\": \"4gt555-6457-7890-d4he-1dc79f44gb66\", \"edgeCloudZoneName\"\
+          : \"example zone name\", \"edgeCloudProvider\": \"example zone provider\"\
+          }]"
+    Request without device identifier:
+      request:
+        headers:
+          accept: application/json
+        parameters:
+          filter: closest
+      response:
+        headers:
+          content-type: application/json
+        status: 422
+        mediaType: application/json
+        body: |-
+          {
+            "code" : "UNIDENTIFIABLE_DEVICE",
+            "status" : 422,
+            "message" : "Cannot identify the device. Please provide a valid device identifier in the request."
+          }
