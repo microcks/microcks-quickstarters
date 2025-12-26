@@ -93,6 +93,8 @@ paths:
             "dispatcherRules": "def json = new groovy.json.JsonSlurper().parseText(mockRequest.requestContent);\n if (json.phoneNumber == null && json.maxAge == 120) {return \"CHECK_3LEGS\"}\n if (\"+346661113334\".equals(json.phoneNumber) && json.maxAge == 120) {return \"CHECK_2LEGS\"}\n if (\"+15555555555\".equals(json.phoneNumber) && 240 == json.maxAge) {return \"Check_SIM_Swap_1\"}\n if (\"+19876543210\".equals(json.phoneNumber) && 500 == json.maxAge) {return \"Check_SIM_Swap_2\"}\n if (\"+11234567890\".equals(json.phoneNumber) && 100 == json.maxAge) {return \"Check_SIM_Swap_3\"}\n if (\"+1234567890\".equals(json.phoneNumber) && 100 == json.maxAge) {return \"CheckSimSwapExample1\"}\n if (\"+1987654321\".equals(json.phoneNumber) && 2400 == json.maxAge) {return \"CheckSimSwapExample2\"}\n if (\"+1123456789\".equals(json.phoneNumber) && 80 == json.maxAge) {return \"CheckSimSwapExample3\"}\n return \"Check_SIM_Swap_1\"",
             "fallback": "Check_SIM_Swap_1"
           }
+        assertions:
+           - rule: RESPONSE_SCHEMA
       security:
         - openId:
           - sim-swap:check
